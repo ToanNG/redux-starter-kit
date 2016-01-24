@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 
+require('babel-register')
 var app = require('../app')
 var debug = require('debug')('react-server:server')
 var http = require('http')
@@ -87,4 +88,5 @@ function onListening () {
     ? 'pipe ' + addr
     : 'port ' + addr.port
   debug('Listening on ' + bind)
+  console.info('==> 🌎  Listening on ' + bind)
 }
