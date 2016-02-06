@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "nodemon ./bin/www",
     "start": "node ./bin/www",
     "test": "standard --verbose | snazzy"
   },
@@ -23,8 +24,10 @@
   },
   "devDependencies": {
     "babel-eslint": "^4.1.6",
+    "babel-loader": "^6.2.2",
     "snazzy": "^2.0.1",
-    "standard": "^5.4.1"
+    "standard": "^5.4.1",
+    "webpack": "^1.12.13"
   },
   "standard": {
     "parser": "babel-eslint"
