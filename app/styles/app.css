@@ -1,0 +1,10 @@
+:root {
+  --purple: #847AD1;
+  --large: 10px;
+}
+
+body {
+  h1 {
+    color: var(--purple);
+  }
+}

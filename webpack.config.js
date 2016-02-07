@@ -17,11 +17,12 @@ module.exports = {
     })
   ],
   resolve: {
-    modulesDirectories: ['node_modules', 'app/scripts']
+    modulesDirectories: ['node_modules', 'app/scripts', 'app/styles']
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/ }
+      { test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/ },
+      { test: /\.s?css$/, loader: 'style!css!myth!sass' }
     ]
   }
 }

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon ./bin/www",
+    "dev": "webpack --watch --progress & nodemon ./bin/www",
     "start": "node ./bin/www",
     "test": "standard --verbose | snazzy"
   },
@@ -20,16 +20,25 @@
     "morgan": "~1.6.1",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
+    "react-redux": "^4.4.0",
+    "redux": "^3.3.1",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.6",
     "babel-loader": "^6.2.2",
+    "css-loader": "^0.23.1",
+    "myth-loader": "^1.0.1",
+    "sass-loader": "^3.1.2",
     "snazzy": "^2.0.1",
     "standard": "^5.4.1",
+    "style-loader": "^0.13.0",
     "webpack": "^1.12.13"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "ignore": [
+      "/dist/"
+    ]
   }
 }

@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 
 class Home extends Component {
+  componentDidMount = () => {
+    console.log('Mount Home!')
+  };
+
   _handleClick = () => {
     window.alert('OK')
   };
