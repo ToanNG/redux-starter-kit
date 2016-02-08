@@ -1,7 +1,7 @@
 var webpack = require('webpack')
 
 module.exports = {
-  context: __dirname + '/app/scripts',
+  context: __dirname + '/client/scripts',
   entry: {
     app: './index.js'
   },
@@ -17,7 +17,7 @@ module.exports = {
     })
   ],
   resolve: {
-    modulesDirectories: ['node_modules', 'app/scripts', 'app/styles']
+    modulesDirectories: ['node_modules', 'shared', 'client/scripts', 'client/styles']
   },
   module: {
     loaders: [
