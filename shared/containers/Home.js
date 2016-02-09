@@ -13,9 +13,9 @@ class Home extends Component {
     actions: PropTypes.object.isRequired
   };
 
-  componentDidMount = () => {
-    this.props.actions.getPosts()
-  };
+  // componentDidMount = () => {
+  //   this.props.actions.getPosts()
+  // };
 
   _handleClick = () => {
     window.alert('OK')
@@ -24,12 +24,17 @@ class Home extends Component {
   render = () => {
     const { post } = this.props
 
-    post.get('posts').map(p => console.log(p.get('title')))
-
     return (
       <div>
         <h1>Home page</h1>
         <button onClick={this._handleClick}>Click me</button>
+        <ul>
+          {post.get('posts').map(p =>
+            <li key={p.get('id')}>
+              {p.get('title')}
+            </li>
+          )}
+        </ul>
       </div>
     )
   };

@@ -64,11 +64,16 @@
 
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 
-	__webpack_require__(184);
+	var _immutifyState = __webpack_require__(186);
+
+	var _immutifyState2 = _interopRequireDefault(_immutifyState);
+
+	__webpack_require__(187);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var store = (0, _configureStore2.default)();
+	var initialState = (0, _immutifyState2.default)(window.__INITIAL_STATE__);
+	var store = (0, _configureStore2.default)(initialState);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -20500,16 +20505,10 @@
 	      args[_key] = arguments[_key];
 	    }
 
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Home)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.componentDidMount = function () {
-	      _this.props.actions.getPosts();
-	    }, _this._handleClick = function () {
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Home)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this._handleClick = function () {
 	      window.alert('OK');
 	    }, _this.render = function () {
 	      var post = _this.props.post;
-
-	      post.get('posts').map(function (p) {
-	        return console.log(p.get('title'));
-	      });
 
 	      return _react2.default.createElement(
 	        'div',
@@ -20523,10 +20522,25 @@
 	          'button',
 	          { onClick: _this._handleClick },
 	          'Click me'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          null,
+	          post.get('posts').map(function (p) {
+	            return _react2.default.createElement(
+	              'li',
+	              { key: p.get('id') },
+	              p.get('title')
+	            );
+	          })
 	        )
 	      );
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
+
+	  // componentDidMount = () => {
+	  //   this.props.actions.getPosts()
+	  // };
 
 	  return Home;
 	}(_react.Component), _class2.propTypes = {
@@ -20555,8 +20569,8 @@
 	function getPosts() {
 	  return {
 	    types: ['GET_POSTS', 'GET_POSTS_SUCCESS', 'GET_POSTS_FAILURE'],
-	    promise: (0, _isomorphicFetch2.default)('/data.json')
-	    // promise: fetch('http://jsonplaceholder.typicode.com/posts')
+	    promise: (0, _isomorphicFetch2.default)('http://localhost:3000/data.json')
+	    // promise: fetch('http://jsonplaceholder.typicode.com/posts?userId=1')
 	  };
 	}
 
@@ -20984,7 +20998,7 @@
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _promise = __webpack_require__(183);
+	var _promise = __webpack_require__(185);
 
 	var _promise2 = _interopRequireDefault(_promise);
 
@@ -21033,10 +21047,24 @@
 
 	var _immutable = __webpack_require__(182);
 
+	var _processData = __webpack_require__(183);
+
+	var _processData2 = _interopRequireDefault(_processData);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	var INITIAL_STATE = (0, _immutable.Map)({
 	  isLoading: false,
 	  posts: (0, _immutable.List)()
 	});
+
+	var postMapper = {
+	  id: 'id',
+	  title: 'title',
+	  body: function body(data) {
+	    return data.body.replace(/\n/g, '\\n');
+	  }
+	};
 
 	function postReducer() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_STATE : arguments[0];
@@ -21051,7 +21079,9 @@
 	    case 'GET_POSTS_SUCCESS':
 	      return state.merge({
 	        isLoading: false,
-	        posts: action.result
+	        posts: action.result.map(function (post) {
+	          return (0, _processData2.default)(post, postMapper);
+	        })
 	      });
 
 	    case 'GET_POSTS_FAILURE':
@@ -26053,6 +26083,128 @@
 
 /***/ },
 /* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = process;
+	function process(data, mapper) {
+	  var result = {};
+
+	  for (var key in mapper) {
+	    if (mapper[key] instanceof Function) {
+	      result[key] = mapper[key](data);
+	    } else {
+	      result[key] = data[mapper[key]];
+	    }
+	  }
+
+	  return result;
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(184)))
+
+/***/ },
+/* 184 */
+/***/ function(module, exports) {
+
+	// shim for using process in browser
+
+	var process = module.exports = {};
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = setTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    clearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        setTimeout(drainQueue, 0);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ },
+/* 185 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -26103,16 +26255,43 @@
 	}
 
 /***/ },
-/* 184 */
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = immutifyState;
+
+	var _immutable = __webpack_require__(182);
+
+	// Abstraction to handle pre-composedstate received from server
+	// (ie, leave top level keys untouched)
+	function immutifyState(obj) {
+	  var objMut = _extends({}, obj);
+
+	  Object.keys(objMut).forEach(function (key) {
+	    objMut[key] = (0, _immutable.fromJS)(objMut[key]);
+	  });
+
+	  return objMut;
+	}
+
+/***/ },
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(185);
+	var content = __webpack_require__(188);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(187)(content, {});
+	var update = __webpack_require__(190)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -26129,10 +26308,10 @@
 	}
 
 /***/ },
-/* 185 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(186)();
+	exports = module.exports = __webpack_require__(189)();
 	// imports
 
 
@@ -26143,7 +26322,7 @@
 
 
 /***/ },
-/* 186 */
+/* 189 */
 /***/ function(module, exports) {
 
 	/*
@@ -26199,7 +26378,7 @@
 
 
 /***/ },
-/* 187 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

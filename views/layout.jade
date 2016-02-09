@@ -6,6 +6,8 @@ html(lang='en-us')
 
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script.
+      window.__INITIAL_STATE__ = !{state}
   body
     block content
     script(src='/assets/app.bundle.js')
