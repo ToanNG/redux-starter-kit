@@ -1,3 +1,6 @@
+global.__CLIENT__ = false
+global.__SERVER__ = true
+
 var express = require('express')
 var path = require('path')
 // var favicon = require('serve-favicon')
