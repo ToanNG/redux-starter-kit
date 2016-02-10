@@ -14,6 +14,11 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
+    }),
+    new webpack.DefinePlugin({
+      'global.__CLIENT__': true,
+      'global.__SERVER__': false,
+      'global.__DEV__': true // <-- disable redux-logger
     })
   ],
   resolve: {

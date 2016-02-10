@@ -1,11 +1,25 @@
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import { browserHistory } from 'react-router'
+import createMemoryHistory from 'react-router/lib/createMemoryHistory'
+import { syncHistory } from 'react-router-redux'
+import createLogger from 'redux-logger'
 import rootReducer from '../reducers'
 import promise from '../middlewares/promise'
 
 export default function configureStore (initialState) {
-  const finalCreateStore = compose(
-    applyMiddleware(promise),
-  )(createStore)
+  const middlewares = [promise]
+
+  if (global.__CLIENT__) {
+    middlewares.push(syncHistory(browserHistory))
+  } else {
+    middlewares.push(syncHistory(createMemoryHistory()))
+  }
+
+  if (global.__DEV__) {
+    middlewares.push(createLogger())
+  }
+
+  const finalCreateStore = applyMiddleware(...middlewares)(createStore)
   const store = finalCreateStore(rootReducer, initialState)
   return store
 }
