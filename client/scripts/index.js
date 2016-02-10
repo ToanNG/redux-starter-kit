@@ -7,6 +7,7 @@ import immutifyState from 'lib/immutifyState'
 import routes from 'routes'
 import 'app.css'
 
+// the router reducer (name "routing") is not an immutable obj
 const initialState = immutifyState({
   obj: window.__INITIAL_STATE__,
   exclude: ['routing']

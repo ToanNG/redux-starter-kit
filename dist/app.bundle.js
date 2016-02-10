@@ -74,6 +74,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// the router reducer (name "routing") is not an immutable obj
 	var initialState = (0, _immutifyState2.default)({
 	  obj: window.__INITIAL_STATE__,
 	  exclude: ['routing']

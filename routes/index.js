@@ -1,5 +1,5 @@
-var express = require('express')
-var router = express.Router()
+import express from 'express'
+const router = express.Router()
 
 import React from 'react'
 import ReactDOM from 'react-dom/server'
@@ -10,7 +10,7 @@ import routes from 'shared/routes'
 
 import * as PostActions from 'shared/actions/post'
 
-router.use(function (req, res, next) {
+router.use((req, res, next) => {
   const store = configureStore()
 
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
@@ -40,4 +40,4 @@ router.use(function (req, res, next) {
   })
 })
 
-module.exports = router
+export default router
