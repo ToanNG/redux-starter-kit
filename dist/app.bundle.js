@@ -70,7 +70,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	__webpack_require__(248);
+	__webpack_require__(249);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25847,7 +25847,8 @@
 
 	var INITIAL_STATE = (0, _immutable.Map)({
 	  isLoading: false,
-	  posts: (0, _immutable.List)()
+	  posts: (0, _immutable.List)(),
+	  selectedPost: (0, _immutable.Map)()
 	});
 
 	var postMapper = {
@@ -25879,6 +25880,18 @@
 	    case 'GET_POSTS_FAILURE':
 	      return state.merge({
 	        isLoading: false
+	      });
+
+	    case 'GET_ONE_POST':
+	      return state.merge({
+	        isLoading: true,
+	        selectedPost: null
+	      });
+
+	    case 'GET_ONE_POST_SUCCESS':
+	      return state.merge({
+	        isLoading: false,
+	        selectedPost: (0, _processData2.default)(action.result, postMapper)
 	      });
 
 	    default:
@@ -31070,7 +31083,7 @@
 	  var objMut = _extends({}, obj);
 
 	  Object.keys(objMut).forEach(function (key) {
-	    if (exclude.indexOf(key) === -1) {
+	    if (!exclude.includes(key)) {
 	      objMut[key] = (0, _immutable.fromJS)(objMut[key]);
 	    }
 	  });
@@ -31102,7 +31115,11 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _About = __webpack_require__(247);
+	var _Post = __webpack_require__(247);
+
+	var _Post2 = _interopRequireDefault(_Post);
+
+	var _About = __webpack_require__(248);
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -31112,6 +31129,7 @@
 	  _reactRouter.Route,
 	  { name: 'app', component: _App2.default, path: '/' },
 	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { name: 'post', component: _Post2.default, path: '/posts/:postId' }),
 	  _react2.default.createElement(_reactRouter.Route, { name: 'about', component: _About2.default, path: '/about' })
 	);
 
@@ -31123,7 +31141,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _class, _temp;
+	var _class, _temp2;
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -31143,16 +31161,38 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var App = (_temp = _class = function (_Component) {
+	var App = (_temp2 = _class = function (_Component) {
 	  _inherits(App, _Component);
 
 	  function App() {
+	    var _Object$getPrototypeO;
+
+	    var _temp, _this, _ret;
+
 	    _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(App)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+	      isInit: true
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 
 	  _createClass(App, [{
+	    key: 'getChildContext',
+	    value: function getChildContext() {
+	      return {
+	        isInit: this.state.isInit
+	      };
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps() {
+	      this.setState({ isInit: false });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -31187,7 +31227,9 @@
 	  return App;
 	}(_react.Component), _class.propTypes = {
 	  children: _react.PropTypes.object
-	}, _temp);
+	}, _class.childContextTypes = {
+	  isInit: _react.PropTypes.bool
+	}, _temp2);
 	exports.default = App;
 
 /***/ },
@@ -31195,6 +31237,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _dec, _class, _class2, _temp2;
 
@@ -31209,6 +31253,8 @@
 	var _redux = __webpack_require__(160);
 
 	var _reactRedux = __webpack_require__(154);
+
+	var _reactRouterRedux = __webpack_require__(232);
 
 	var _post = __webpack_require__(244);
 
@@ -31227,7 +31273,10 @@
 	var Home = (_dec = (0, _reactRedux.connect)(function (state) {
 	  return { post: state.post };
 	}, function (dispatch) {
-	  return { actions: (0, _redux.bindActionCreators)(PostActions, dispatch) };
+	  return {
+	    actions: (0, _redux.bindActionCreators)(PostActions, dispatch),
+	    router: (0, _redux.bindActionCreators)(_reactRouterRedux.routeActions, dispatch)
+	  };
 	}), _dec(_class = (_temp2 = _class2 = function (_Component) {
 	  _inherits(Home, _Component);
 
@@ -31242,8 +31291,8 @@
 	      args[_key] = arguments[_key];
 	    }
 
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Home)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this._handleClick = function () {
-	      window.alert('OK');
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Home)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this._handleClick = function (id) {
+	      _this.props.router.push('/posts/' + id);
 	    }, _this.render = function () {
 	      var post = _this.props.post;
 
@@ -31256,17 +31305,12 @@
 	          'Home page'
 	        ),
 	        _react2.default.createElement(
-	          'button',
-	          { onClick: _this._handleClick },
-	          'Click me'
-	        ),
-	        _react2.default.createElement(
 	          'ul',
 	          null,
 	          post.get('posts').map(function (p) {
 	            return _react2.default.createElement(
 	              'li',
-	              { key: p.get('id') },
+	              { key: p.get('id'), onClick: _this._handleClick.bind(null, p.get('id')) },
 	              p.get('title')
 	            );
 	          })
@@ -31275,15 +31319,23 @@
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 
-	  // componentDidMount = () => {
-	  //   this.props.actions.getPosts()
-	  // };
+	  _createClass(Home, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (!this.context.isInit) {
+	        this.props.actions.getPosts();
+	      }
+	    }
+	  }]);
 
 	  return Home;
 	}(_react.Component), _class2.propTypes = {
 	  post: _react.PropTypes.object.isRequired,
-	  actions: _react.PropTypes.object.isRequired
-	}, _temp2)) || _class);
+	  actions: _react.PropTypes.object.isRequired,
+	  router: _react.PropTypes.object.isRequired
+	}, _class2.contextTypes = {
+	  isInit: _react.PropTypes.bool
+	}, _class2.needs = [PostActions.getPosts], _temp2)) || _class);
 	exports.default = Home;
 
 /***/ },
@@ -31296,6 +31348,7 @@
 	  value: true
 	});
 	exports.getPosts = getPosts;
+	exports.getOnePost = getOnePost;
 
 	var _isomorphicFetch = __webpack_require__(245);
 
@@ -31306,8 +31359,16 @@
 	function getPosts() {
 	  return {
 	    types: ['GET_POSTS', 'GET_POSTS_SUCCESS', 'GET_POSTS_FAILURE'],
-	    promise: (0, _isomorphicFetch2.default)('http://localhost:3000/data.json')
-	    // promise: fetch('http://jsonplaceholder.typicode.com/posts?userId=1')
+	    promise: (0, _isomorphicFetch2.default)('http://jsonplaceholder.typicode.com/posts?userId=1')
+	  };
+	}
+
+	function getOnePost(_ref) {
+	  var postId = _ref.postId;
+
+	  return {
+	    types: ['GET_ONE_POST', 'GET_ONE_POST_SUCCESS', 'GET_ONE_POST_FAILURE'],
+	    promise: (0, _isomorphicFetch2.default)('http://jsonplaceholder.typicode.com/posts/' + postId)
 	  };
 	}
 
@@ -31724,6 +31785,108 @@
 
 	'use strict';
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class, _class2, _temp2;
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _redux = __webpack_require__(160);
+
+	var _reactRedux = __webpack_require__(154);
+
+	var _post = __webpack_require__(244);
+
+	var PostActions = _interopRequireWildcard(_post);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Post = (_dec = (0, _reactRedux.connect)(function (state, ownProps) {
+	  return {
+	    post: state.post,
+	    postId: ownProps.params.postId
+	  };
+	}, function (dispatch) {
+	  return { actions: (0, _redux.bindActionCreators)(PostActions, dispatch) };
+	}), _dec(_class = (_temp2 = _class2 = function (_Component) {
+	  _inherits(Post, _Component);
+
+	  function Post() {
+	    var _Object$getPrototypeO;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, Post);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Post)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.render = function () {
+	      var post = _this.props.post;
+
+	      var selectedPost = post.get('selectedPost');
+
+	      if (!selectedPost) return null;
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          selectedPost.get('title')
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          selectedPost.get('body')
+	        )
+	      );
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(Post, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (!this.context.isInit) {
+	        var postId = this.props.postId;
+
+	        this.props.actions.getOnePost({ postId: postId });
+	      }
+	    }
+	  }]);
+
+	  return Post;
+	}(_react.Component), _class2.propTypes = {
+	  post: _react.PropTypes.object.isRequired,
+	  postId: _react.PropTypes.string,
+	  actions: _react.PropTypes.object.isRequired
+	}, _class2.contextTypes = {
+	  isInit: _react.PropTypes.bool
+	}, _class2.needs = [PostActions.getOnePost], _temp2)) || _class);
+	exports.default = Post;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -31749,16 +31912,16 @@
 	exports.default = About;
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(249);
+	var content = __webpack_require__(250);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(251)(content, {});
+	var update = __webpack_require__(252)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -31775,10 +31938,10 @@
 	}
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(250)();
+	exports = module.exports = __webpack_require__(251)();
 	// imports
 
 
@@ -31789,7 +31952,7 @@
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports) {
 
 	/*
@@ -31845,7 +32008,7 @@
 
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

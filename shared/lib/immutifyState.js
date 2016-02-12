@@ -8,7 +8,7 @@ export default function immutifyState ({ obj, exclude }) {
   Object
     .keys(objMut)
     .forEach(key => {
-      if (exclude.indexOf(key) === -1) {
+      if (!exclude.includes(key)) {
         objMut[key] = fromJS(objMut[key])
       }
     })

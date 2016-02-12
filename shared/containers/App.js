@@ -5,6 +5,22 @@ class App extends Component {
   static propTypes = {
     children: PropTypes.object
   };
+  static childContextTypes = {
+    isInit: PropTypes.bool
+  };
+  state = {
+    isInit: true
+  };
+
+  getChildContext () {
+    return {
+      isInit: this.state.isInit
+    }
+  }
+
+  componentWillReceiveProps () {
+    this.setState({ isInit: false })
+  }
 
   render () {
     return (

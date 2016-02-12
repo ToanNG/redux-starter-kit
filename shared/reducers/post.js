@@ -3,7 +3,8 @@ import process from '../lib/processData'
 
 const INITIAL_STATE = Map({
   isLoading: false,
-  posts: List()
+  posts: List(),
+  selectedPost: Map()
 })
 
 const postMapper = {
@@ -28,6 +29,18 @@ export default function postReducer (state = INITIAL_STATE, action) {
     case 'GET_POSTS_FAILURE':
       return state.merge({
         isLoading: false
+      })
+
+    case 'GET_ONE_POST':
+      return state.merge({
+        isLoading: true,
+        selectedPost: null
+      })
+
+    case 'GET_ONE_POST_SUCCESS':
+      return state.merge({
+        isLoading: false,
+        selectedPost: process(action.result, postMapper)
       })
 
     default:

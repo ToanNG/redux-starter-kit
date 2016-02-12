@@ -7,8 +7,7 @@ import { Provider } from 'react-redux'
 import { RouterContext, match } from 'react-router'
 import configureStore from 'shared/store/configureStore'
 import routes from 'shared/routes'
-
-import * as PostActions from 'shared/actions/post'
+import fetchComponentData from 'shared/lib/fetchComponentData'
 
 router.use((req, res, next) => {
   const store = configureStore()
@@ -19,7 +18,7 @@ router.use((req, res, next) => {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
-      store.dispatch(PostActions.getPosts())
+      fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
         .then(() => {
           const InitialView = (
             <Provider store={store}>
