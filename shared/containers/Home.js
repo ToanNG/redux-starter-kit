@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 import * as PostActions from '../actions/post'
 import ImageComponent from '../components/Image'
+import ListComponent from '../components/List'
 
 @connect(
   state => ({ post: state.post }),
@@ -32,7 +33,7 @@ class Home extends Component {
     }
   }
 
-  _handleClick = (id) => {
+  _handleClickItem = (id) => {
     this.props.router.push(`/posts/${id}`)
   };
 
@@ -49,13 +50,10 @@ class Home extends Component {
             height: 92
           }}
         />
-        <ul>
-          {post.get('posts').map(p =>
-            <li key={p.get('id')} onClick={this._handleClick.bind(null, p.get('id'))}>
-              {p.get('title')}
-            </li>
-          )}
-        </ul>
+        <ListComponent
+          dataSource={post.get('posts')}
+          onClickItem={this._handleClickItem}
+        />
       </div>
     )
   };

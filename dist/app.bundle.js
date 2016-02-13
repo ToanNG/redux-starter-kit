@@ -31280,6 +31280,10 @@
 
 	var _Image2 = _interopRequireDefault(_Image);
 
+	var _List = __webpack_require__(252);
+
+	var _List2 = _interopRequireDefault(_List);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -31311,7 +31315,7 @@
 	      args[_key] = arguments[_key];
 	    }
 
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Home)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this._handleClick = function (id) {
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Home)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this._handleClickItem = function (id) {
 	      _this.props.router.push('/posts/' + id);
 	    }, _this.render = function () {
 	      var post = _this.props.post;
@@ -31331,17 +31335,10 @@
 	            height: 92
 	          }
 	        }),
-	        _react2.default.createElement(
-	          'ul',
-	          null,
-	          post.get('posts').map(function (p) {
-	            return _react2.default.createElement(
-	              'li',
-	              { key: p.get('id'), onClick: _this._handleClick.bind(null, p.get('id')) },
-	              p.get('title')
-	            );
-	          })
-	        )
+	        _react2.default.createElement(_List2.default, {
+	          dataSource: post.get('posts'),
+	          onClickItem: _this._handleClickItem
+	        })
 	      );
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -32396,7 +32393,75 @@
 
 
 /***/ },
-/* 252 */,
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _class, _temp2;
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _immutable = __webpack_require__(236);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ListComponent = (_temp2 = _class = function (_Component) {
+	  _inherits(ListComponent, _Component);
+
+	  function ListComponent() {
+	    var _Object$getPrototypeO;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, ListComponent);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ListComponent)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this._handleClick = function (id) {
+	      var onClickItem = _this.props.onClickItem;
+
+	      onClickItem && onClickItem(id);
+	    }, _this.render = function () {
+	      var dataSource = _this.props.dataSource;
+
+	      return _react2.default.createElement(
+	        'ul',
+	        null,
+	        dataSource.map(function (item, key) {
+	          return _react2.default.createElement(
+	            'li',
+	            { key: key, onClick: _this._handleClick.bind(null, item.get('id')) },
+	            item.get('title')
+	          );
+	        })
+	      );
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  return ListComponent;
+	}(_react.Component), _class.propTypes = {
+	  dataSource: _react.PropTypes.instanceOf(_immutable.List).isRequired,
+	  onClickItem: _react.PropTypes.func
+	}, _temp2);
+	exports.default = ListComponent;
+	module.exports = exports['default'];
+
+/***/ },
 /* 253 */
 /***/ function(module, exports, __webpack_require__) {
 

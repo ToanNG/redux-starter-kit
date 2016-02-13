@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react'
+import { List } from 'immutable'
 
-class List extends Component {
+class ListComponent extends Component {
   static propTypes = {
-    dataSource: PropTypes.array.isRequired,
+    dataSource: PropTypes.instanceOf(List).isRequired,
     onClickItem: PropTypes.func
   };
 
@@ -16,8 +17,8 @@ class List extends Component {
     return (
       <ul>
         {dataSource.map((item, key) =>
-          <li key={key} onClick={this._handleClick.bind(null, item.id)}>
-            {item.title}
+          <li key={key} onClick={this._handleClick.bind(null, item.get('id'))}>
+            {item.get('title')}
           </li>
         )}
       </ul>
@@ -25,4 +26,4 @@ class List extends Component {
   };
 }
 
-export default List
+export default ListComponent
