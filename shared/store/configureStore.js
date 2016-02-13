@@ -9,13 +9,13 @@ import promise from '../middlewares/promise'
 export default function configureStore (initialState) {
   const middlewares = [promise]
 
-  if (global.__CLIENT__) {
+  if (__CLIENT__) {
     middlewares.push(syncHistory(browserHistory))
   } else {
     middlewares.push(syncHistory(createMemoryHistory()))
   }
 
-  if (global.__DEV__) {
+  if (__DEV__) {
     middlewares.push(createLogger())
   }
 

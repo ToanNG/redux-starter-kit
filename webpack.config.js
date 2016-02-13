@@ -16,9 +16,9 @@ module.exports = {
       }
     }),
     new webpack.DefinePlugin({
-      'global.__CLIENT__': true,
-      'global.__SERVER__': false,
-      'global.__DEV__': true // <-- disable redux-logger
+      __CLIENT__: true,
+      __SERVER__: false,
+      __DEV__: true // <-- disable redux-logger
     })
   ],
   resolve: {

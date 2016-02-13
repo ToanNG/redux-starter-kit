@@ -5,6 +5,7 @@ import { Router, browserHistory } from 'react-router'
 import configureStore from 'store/configureStore'
 import immutifyState from 'lib/immutifyState'
 import routes from 'routes'
+import 'loaders.css/src/animations/ball-scale-multiple.scss'
 import 'app.css'
 
 // the router reducer (name "routing") is not an immutable obj

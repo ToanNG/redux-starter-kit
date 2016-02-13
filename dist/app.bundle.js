@@ -70,7 +70,9 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	__webpack_require__(249);
+	__webpack_require__(255);
+
+	__webpack_require__(259);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9213,6 +9215,7 @@
 	 */
 	var EventInterface = {
 	  type: null,
+	  target: null,
 	  // currentTarget is set when dispatching; no use in copying it here
 	  currentTarget: emptyFunction.thatReturnsNull,
 	  eventPhase: null,
@@ -9246,8 +9249,6 @@
 	  this.dispatchConfig = dispatchConfig;
 	  this.dispatchMarker = dispatchMarker;
 	  this.nativeEvent = nativeEvent;
-	  this.target = nativeEventTarget;
-	  this.currentTarget = nativeEventTarget;
 
 	  var Interface = this.constructor.Interface;
 	  for (var propName in Interface) {
@@ -9258,7 +9259,11 @@
 	    if (normalize) {
 	      this[propName] = normalize(nativeEvent);
 	    } else {
-	      this[propName] = nativeEvent[propName];
+	      if (propName === 'target') {
+	        this.target = nativeEventTarget;
+	      } else {
+	        this[propName] = nativeEvent[propName];
+	      }
 	    }
 	  }
 
@@ -13100,7 +13105,10 @@
 	      }
 	    });
 
-	    nativeProps.children = content;
+	    if (content) {
+	      nativeProps.children = content;
+	    }
+
 	    return nativeProps;
 	  }
 
@@ -18046,7 +18054,7 @@
 
 	'use strict';
 
-	module.exports = '0.14.6';
+	module.exports = '0.14.7';
 
 /***/ },
 /* 142 */
@@ -25445,6 +25453,7 @@
 	  var store = finalCreateStore(_reducers2.default, initialState);
 	  return store;
 	}
+	module.exports = exports['default'];
 
 /***/ },
 /* 232 */
@@ -25825,6 +25834,7 @@
 	});
 
 	exports.default = rootReducer;
+	module.exports = exports['default'];
 
 /***/ },
 /* 235 */
@@ -25898,6 +25908,7 @@
 	      return state;
 	  }
 	}
+	module.exports = exports['default'];
 
 /***/ },
 /* 236 */
@@ -30909,6 +30920,7 @@
 
 	  return result;
 	}
+	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(238)))
 
 /***/ },
@@ -31058,6 +31070,7 @@
 	    };
 	  };
 	}
+	module.exports = exports['default'];
 
 /***/ },
 /* 240 */
@@ -31090,6 +31103,7 @@
 
 	  return objMut;
 	}
+	module.exports = exports['default'];
 
 /***/ },
 /* 241 */
@@ -31115,11 +31129,11 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Post = __webpack_require__(247);
+	var _Post = __webpack_require__(253);
 
 	var _Post2 = _interopRequireDefault(_Post);
 
-	var _About = __webpack_require__(248);
+	var _About = __webpack_require__(254);
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -31132,6 +31146,7 @@
 	  _react2.default.createElement(_reactRouter.Route, { name: 'post', component: _Post2.default, path: '/posts/:postId' }),
 	  _react2.default.createElement(_reactRouter.Route, { name: 'about', component: _About2.default, path: '/about' })
 	);
+	module.exports = exports['default'];
 
 /***/ },
 /* 242 */
@@ -31231,6 +31246,7 @@
 	  isInit: _react.PropTypes.bool
 	}, _temp2);
 	exports.default = App;
+	module.exports = exports['default'];
 
 /***/ },
 /* 243 */
@@ -31259,6 +31275,10 @@
 	var _post = __webpack_require__(244);
 
 	var PostActions = _interopRequireWildcard(_post);
+
+	var _Image = __webpack_require__(247);
+
+	var _Image2 = _interopRequireDefault(_Image);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -31304,6 +31324,13 @@
 	          null,
 	          'Home page'
 	        ),
+	        _react2.default.createElement(_Image2.default, {
+	          src: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
+	          style: {
+	            width: 272,
+	            height: 92
+	          }
+	        }),
 	        _react2.default.createElement(
 	          'ul',
 	          null,
@@ -31337,6 +31364,7 @@
 	  isInit: _react.PropTypes.bool
 	}, _class2.needs = [PostActions.getPosts], _temp2)) || _class);
 	exports.default = Home;
+	module.exports = exports['default'];
 
 /***/ },
 /* 244 */
@@ -31785,6 +31813,595 @@
 
 	'use strict';
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _class, _temp2;
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactLoaders = __webpack_require__(248);
+
+	var _reactLoaders2 = _interopRequireDefault(_reactLoaders);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ImageComponent = (_temp2 = _class = function (_Component) {
+	  _inherits(ImageComponent, _Component);
+
+	  function ImageComponent() {
+	    var _Object$getPrototypeO;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, ImageComponent);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ImageComponent)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = { isLoading: true }, _this.componentDidMount = function () {
+	      _this._checkValidImage();
+	    }, _this._checkValidImage = function () {
+	      if (window && window.Image) {
+	        var image = new window.Image();
+	        image.src = _this.props.src;
+	        image.onload = _this._handleLoad;
+	        image.onerror = _this._handleError;
+	      }
+	    }, _this._handleLoad = function () {
+	      _this.setState({ isLoading: false }, function () {
+	        return _this.props.onLoad();
+	      });
+	    }, _this._handleError = function () {
+	      _this.setState({ isLoading: true }, function () {
+	        return _this.props.onError();
+	      });
+	    }, _this.render = function () {
+	      var _this$props = _this.props;
+	      var src = _this$props.src;
+	      var className = _this$props.className;
+	      var style = _this$props.style;
+	      var loader = _this$props.loader;
+	      var isLoading = _this.state.isLoading;
+
+	      if (!isLoading) {
+	        style = _extends({}, style, {
+	          background: 'url(' + src + ') center/cover no-repeat'
+	        });
+	      }
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: className, style: style },
+	        _react2.default.createElement(
+	          'div',
+	          { style: {
+	              display: 'flex',
+	              alignItems: 'center',
+	              justifyContent: 'center',
+	              width: '100%',
+	              height: '100%',
+	              background: '#CCC',
+	              opacity: +isLoading,
+	              transition: 'opacity 500ms'
+	            } },
+	          loader
+	        )
+	      );
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  return ImageComponent;
+	}(_react.Component), _class.propTypes = {
+	  src: _react.PropTypes.string.isRequired,
+	  onLoad: _react.PropTypes.func,
+	  onError: _react.PropTypes.func,
+	  loader: _react.PropTypes.any,
+	  className: _react.PropTypes.string,
+	  style: _react.PropTypes.object
+	}, _class.defaultProps = {
+	  loader: _react2.default.createElement(_reactLoaders2.default, { type: 'ball-scale-multiple' }),
+	  onLoad: function onLoad() {
+	    return undefined;
+	  },
+	  onError: function onError() {
+	    return undefined;
+	  }
+	}, _temp2);
+	exports.default = ImageComponent;
+	module.exports = exports['default'];
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	(function webpackUniversalModuleDefinition(root, factory) {
+		if(true)
+			module.exports = factory(__webpack_require__(1), __webpack_require__(249), __webpack_require__(251));
+		else if(typeof define === 'function' && define.amd)
+			define(["react", "merge", "classnames"], factory);
+		else {
+			var a = typeof exports === 'object' ? factory(require("react"), require("merge"), require("classnames")) : factory(root["react"], root["merge"], root["classnames"]);
+			for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+		}
+	})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__) {
+	return /******/ (function(modules) { // webpackBootstrap
+	/******/ 	// The module cache
+	/******/ 	var installedModules = {};
+
+	/******/ 	// The require function
+	/******/ 	function __webpack_require__(moduleId) {
+
+	/******/ 		// Check if module is in cache
+	/******/ 		if(installedModules[moduleId])
+	/******/ 			return installedModules[moduleId].exports;
+
+	/******/ 		// Create a new module (and put it into the cache)
+	/******/ 		var module = installedModules[moduleId] = {
+	/******/ 			exports: {},
+	/******/ 			id: moduleId,
+	/******/ 			loaded: false
+	/******/ 		};
+
+	/******/ 		// Execute the module function
+	/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+	/******/ 		// Flag the module as loaded
+	/******/ 		module.loaded = true;
+
+	/******/ 		// Return the exports of the module
+	/******/ 		return module.exports;
+	/******/ 	}
+
+
+	/******/ 	// expose the modules object (__webpack_modules__)
+	/******/ 	__webpack_require__.m = modules;
+
+	/******/ 	// expose the module cache
+	/******/ 	__webpack_require__.c = installedModules;
+
+	/******/ 	// __webpack_public_path__
+	/******/ 	__webpack_require__.p = "";
+
+	/******/ 	// Load entry module and return exports
+	/******/ 	return __webpack_require__(0);
+	/******/ })
+	/************************************************************************/
+	/******/ ([
+	/* 0 */
+	/***/ function(module, exports, __webpack_require__) {
+
+		'use strict';
+
+		Object.defineProperty(exports, '__esModule', {
+		  value: true
+		});
+
+		var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+		var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+		function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+		function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+		var _react = __webpack_require__(1);
+
+		var _react2 = _interopRequireDefault(_react);
+
+		var _merge = __webpack_require__(2);
+
+		var _merge2 = _interopRequireDefault(_merge);
+
+		var _classnames2 = __webpack_require__(3);
+
+		var _classnames3 = _interopRequireDefault(_classnames2);
+
+		var Loader = (function (_Component) {
+		  _inherits(Loader, _Component);
+
+		  function Loader() {
+		    _classCallCheck(this, Loader);
+
+		    _get(Object.getPrototypeOf(Loader.prototype), 'constructor', this).apply(this, arguments);
+		  }
+
+		  _createClass(Loader, [{
+		    key: 'renderDiv',
+		    value: function renderDiv(n) {
+		      return _react2['default'].createElement('div', { key: n });
+		    }
+		  }, {
+		    key: 'render',
+		    value: function render() {
+		      var _classnames;
+
+		      var nDivs = range(Types[this.props.type]);
+		      var classes = (0, _classnames3['default'])((_classnames = {
+		        loader: true
+		      }, _defineProperty(_classnames, 'loader-' + this.props.size, this.props.size !== 'md'), _defineProperty(_classnames, 'loader-active', this.props.active), _defineProperty(_classnames, 'loader-hidden', !this.props.active), _classnames), this.props.className);
+
+		      return _react2['default'].createElement(
+		        'div',
+		        { className: classes },
+		        _react2['default'].createElement(
+		          'div',
+		          { className: 'loader-inner ' + this.props.type },
+		          nDivs.map(this.renderDiv)
+		        )
+		      );
+		    }
+		  }], [{
+		    key: 'removeType',
+		    value: function removeType(type) {
+		      delete Types[key];
+		    }
+		  }, {
+		    key: 'addType',
+		    value: function addType(key, nDivs) {
+		      return Types[key] = nDivs;
+		    }
+		  }, {
+		    key: 'propTypes',
+		    value: {
+		      type: _react2['default'].PropTypes.string,
+		      size: _react2['default'].PropTypes.string,
+		      active: _react2['default'].PropTypes.bool
+		    },
+		    enumerable: true
+		  }, {
+		    key: 'defaultProps',
+		    value: {
+		      type: 'ball-pulse',
+		      size: 'md',
+		      active: true
+		    },
+		    enumerable: true
+		  }]);
+
+		  return Loader;
+		})(_react.Component);
+
+		exports.Loader = Loader;
+		exports['default'] = Loader;
+		var Types = {
+		  "ball-pulse": 3,
+		  "ball-grid-pulse": 9,
+		  "ball-clip-rotate": 1,
+		  "ball-clip-rotate-pulse": 2,
+		  "square-spin": 1,
+		  "ball-clip-rotate-multiple": 2,
+		  "ball-pulse-rise": 5,
+		  "ball-rotate": 1,
+		  "cube-transition": 2,
+		  "ball-zig-zag": 2,
+		  "ball-zig-zag-deflect": 2,
+		  "ball-triangle-path": 3,
+		  "ball-scale": 1,
+		  "line-scale": 5,
+		  "line-scale-party": 4,
+		  "ball-scale-multiple": 3,
+		  "ball-pulse-sync": 3,
+		  "ball-beat": 3,
+		  "line-scale-pulse-out": 5,
+		  "line-scale-pulse-out-rapid": 5,
+		  "ball-scale-ripple": 1,
+		  "ball-scale-ripple-multiple": 3,
+		  "ball-spin-fade-loader": 8,
+		  "line-spin-fade-loader": 8,
+		  "triangle-skew-spin": 1,
+		  "pacman": 5,
+		  "ball-grid-beat": 9,
+		  "semi-circle-spin": 1
+		};
+
+		exports.Types = Types;
+		function range(x) {
+		  var i = -1,
+		      arr = [];
+		  while (++i < x) {
+		    arr.push(i);
+		  }
+		  return arr;
+		}
+
+	/***/ },
+	/* 1 */
+	/***/ function(module, exports) {
+
+		module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+
+	/***/ },
+	/* 2 */
+	/***/ function(module, exports) {
+
+		module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
+
+	/***/ },
+	/* 3 */
+	/***/ function(module, exports) {
+
+		module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
+
+	/***/ }
+	/******/ ])
+	});
+	;
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/*!
+	 * @name JavaScript/NodeJS Merge v1.2.0
+	 * @author yeikos
+	 * @repository https://github.com/yeikos/js.merge
+
+	 * Copyright 2014 yeikos - MIT license
+	 * https://raw.github.com/yeikos/js.merge/master/LICENSE
+	 */
+
+	;(function(isNode) {
+
+		/**
+		 * Merge one or more objects 
+		 * @param bool? clone
+		 * @param mixed,... arguments
+		 * @return object
+		 */
+
+		var Public = function(clone) {
+
+			return merge(clone === true, false, arguments);
+
+		}, publicName = 'merge';
+
+		/**
+		 * Merge two or more objects recursively 
+		 * @param bool? clone
+		 * @param mixed,... arguments
+		 * @return object
+		 */
+
+		Public.recursive = function(clone) {
+
+			return merge(clone === true, true, arguments);
+
+		};
+
+		/**
+		 * Clone the input removing any reference
+		 * @param mixed input
+		 * @return mixed
+		 */
+
+		Public.clone = function(input) {
+
+			var output = input,
+				type = typeOf(input),
+				index, size;
+
+			if (type === 'array') {
+
+				output = [];
+				size = input.length;
+
+				for (index=0;index<size;++index)
+
+					output[index] = Public.clone(input[index]);
+
+			} else if (type === 'object') {
+
+				output = {};
+
+				for (index in input)
+
+					output[index] = Public.clone(input[index]);
+
+			}
+
+			return output;
+
+		};
+
+		/**
+		 * Merge two objects recursively
+		 * @param mixed input
+		 * @param mixed extend
+		 * @return mixed
+		 */
+
+		function merge_recursive(base, extend) {
+
+			if (typeOf(base) !== 'object')
+
+				return extend;
+
+			for (var key in extend) {
+
+				if (typeOf(base[key]) === 'object' && typeOf(extend[key]) === 'object') {
+
+					base[key] = merge_recursive(base[key], extend[key]);
+
+				} else {
+
+					base[key] = extend[key];
+
+				}
+
+			}
+
+			return base;
+
+		}
+
+		/**
+		 * Merge two or more objects
+		 * @param bool clone
+		 * @param bool recursive
+		 * @param array argv
+		 * @return object
+		 */
+
+		function merge(clone, recursive, argv) {
+
+			var result = argv[0],
+				size = argv.length;
+
+			if (clone || typeOf(result) !== 'object')
+
+				result = {};
+
+			for (var index=0;index<size;++index) {
+
+				var item = argv[index],
+
+					type = typeOf(item);
+
+				if (type !== 'object') continue;
+
+				for (var key in item) {
+
+					var sitem = clone ? Public.clone(item[key]) : item[key];
+
+					if (recursive) {
+
+						result[key] = merge_recursive(result[key], sitem);
+
+					} else {
+
+						result[key] = sitem;
+
+					}
+
+				}
+
+			}
+
+			return result;
+
+		}
+
+		/**
+		 * Get type of variable
+		 * @param mixed input
+		 * @return string
+		 *
+		 * @see http://jsperf.com/typeofvar
+		 */
+
+		function typeOf(input) {
+
+			return ({}).toString.call(input).slice(8, -1).toLowerCase();
+
+		}
+
+		if (isNode) {
+
+			module.exports = Public;
+
+		} else {
+
+			window[publicName] = Public;
+
+		}
+
+	})(typeof module === 'object' && module && typeof module.exports === 'object' && module.exports);
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(250)(module)))
+
+/***/ },
+/* 250 */
+/***/ function(module, exports) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 252 */,
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _dec, _class, _class2, _temp2;
@@ -31880,9 +32497,10 @@
 	  isInit: _react.PropTypes.bool
 	}, _class2.needs = [PostActions.getOnePost], _temp2)) || _class);
 	exports.default = Post;
+	module.exports = exports['default'];
 
 /***/ },
-/* 248 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31910,25 +32528,26 @@
 	};
 
 	exports.default = About;
+	module.exports = exports['default'];
 
 /***/ },
-/* 249 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(250);
+	var content = __webpack_require__(256);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(252)(content, {});
+	var update = __webpack_require__(258)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/myth-loader/index.js!./../../node_modules/sass-loader/index.js!./app.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/myth-loader/index.js!./../../node_modules/sass-loader/index.js!./app.css");
+			module.hot.accept("!!./../../../css-loader/index.js!./../../../myth-loader/index.js!./../../../sass-loader/index.js!./ball-scale-multiple.scss", function() {
+				var newContent = require("!!./../../../css-loader/index.js!./../../../myth-loader/index.js!./../../../sass-loader/index.js!./ball-scale-multiple.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -31938,21 +32557,21 @@
 	}
 
 /***/ },
-/* 250 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(251)();
+	exports = module.exports = __webpack_require__(257)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "body h1 {\n  color: #847AD1;\n}", ""]);
+	exports.push([module.id, "@-webkit-keyframes ball-scale-multiple {\n  0% {\n    -webkit-transform: scale(0);\n    transform: scale(0);\n    opacity: 0;\n  }\n\n  5% {\n    opacity: 1;\n  }\n\n  100% {\n    -webkit-transform: scale(1);\n    transform: scale(1);\n    opacity: 0;\n  }\n}\n\n@keyframes ball-scale-multiple {\n  0% {\n    -webkit-transform: scale(0);\n    transform: scale(0);\n    opacity: 0;\n  }\n\n  5% {\n    opacity: 1;\n  }\n\n  100% {\n    -webkit-transform: scale(1);\n    transform: scale(1);\n    opacity: 0;\n  }\n}\n\n.ball-scale-multiple {\n  position: relative;\n  -webkit-transform: translateY(-30px);\n  transform: translateY(-30px);\n}\n\n.ball-scale-multiple > div:nth-child(2) {\n  -webkit-animation-delay: -0.4s;\n  animation-delay: -0.4s;\n}\n\n.ball-scale-multiple > div:nth-child(3) {\n  -webkit-animation-delay: -0.2s;\n  animation-delay: -0.2s;\n}\n\n.ball-scale-multiple > div {\n  background-color: #fff;\n  width: 15px;\n  height: 15px;\n  border-radius: 100%;\n  margin: 2px;\n  -webkit-animation-fill-mode: both;\n  animation-fill-mode: both;\n  position: absolute;\n  left: -30px;\n  top: 0px;\n  opacity: 0;\n  margin: 0;\n  width: 60px;\n  height: 60px;\n  -webkit-animation: ball-scale-multiple 1s 0s linear infinite;\n  animation: ball-scale-multiple 1s 0s linear infinite;\n}", ""]);
 
 	// exports
 
 
 /***/ },
-/* 251 */
+/* 257 */
 /***/ function(module, exports) {
 
 	/*
@@ -32008,7 +32627,7 @@
 
 
 /***/ },
-/* 252 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -32259,6 +32878,46 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
+
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(260);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(258)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/myth-loader/index.js!./../../node_modules/sass-loader/index.js!./app.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/myth-loader/index.js!./../../node_modules/sass-loader/index.js!./app.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(257)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "body h1 {\n  color: #847AD1;\n}", ""]);
+
+	// exports
 
 
 /***/ }
