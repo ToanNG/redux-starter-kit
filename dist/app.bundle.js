@@ -91,7 +91,7 @@
 	    { history: _reactRouter.browserHistory },
 	    _routes2.default
 	  )
-	), document.getElementById('react-root'));
+		), document.getElementById('react-root'));
 
 /***/ },
 /* 1 */
@@ -30903,23 +30903,81 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = process;
 	function process(data, mapper) {
+	  if (!(data instanceof Object)) {
+	    throw new TypeError("Value of argument \"data\" violates contract.\n\nExpected:\nObject\n\nGot:\n" + _inspect(data));
+	  }
+
+	  if (!(mapper != null && (typeof mapper === "undefined" ? "undefined" : _typeof(mapper)) === 'object' && Object.keys(mapper).every(function (key) {
+	    var _key = mapper[key];
+	    return typeof _key === 'string' || typeof _key === 'function';
+	  }))) {
+	    throw new TypeError("Value of argument \"mapper\" violates contract.\n\nExpected:\n{ [key: string]: string | Function\n}\n\nGot:\n" + _inspect(mapper));
+	  }
+
 	  var result = {};
 
-	  for (var key in mapper) {
-	    if (mapper[key] instanceof Function) {
-	      result[key] = mapper[key](data);
+	  for (var _key2 in mapper) {
+	    if (mapper[_key2] instanceof Function) {
+	      result[_key2] = mapper[_key2](data);
 	    } else {
-	      result[key] = data[mapper[key]];
+	      result[_key2] = data[mapper[_key2]];
 	    }
 	  }
 
 	  return result;
 	}
+
+	function _inspect(input) {
+	  if (input === null) {
+	    return 'null';
+	  } else if (input === undefined) {
+	    return 'void';
+	  } else if (typeof input === 'string' || typeof input === 'number' || typeof input === 'boolean') {
+	    return typeof input === "undefined" ? "undefined" : _typeof(input);
+	  } else if (Array.isArray(input)) {
+	    if (input.length > 0) {
+	      var first = _inspect(input[0]);
+
+	      if (input.every(function (item) {
+	        return _inspect(item) === first;
+	      })) {
+	        return first.trim() + '[]';
+	      } else {
+	        return '[' + input.map(_inspect).join(', ') + ']';
+	      }
+	    } else {
+	      return 'Array';
+	    }
+	  } else {
+	    var keys = Object.keys(input);
+
+	    if (!keys.length) {
+	      if (input.constructor && input.constructor.name && input.constructor.name !== 'Object') {
+	        return input.constructor.name;
+	      } else {
+	        return 'Object';
+	      }
+	    }
+
+	    var entries = keys.map(function (key) {
+	      return (/^([A-Z_$][A-Z0-9_$]*)$/i.test(key) ? key : JSON.stringify(key)) + ': ' + _inspect(input[key]) + ';';
+	    }).join('\n  ');
+
+	    if (input.constructor && input.constructor.name && input.constructor.name !== 'Object') {
+	      return input.constructor.name + ' {\n  ' + entries + '\n}';
+	    } else {
+	      return '{ ' + entries + '\n}';
+	    }
+	  }
+	}
+
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(238)))
 
@@ -31395,7 +31453,7 @@
 	    types: ['GET_ONE_POST', 'GET_ONE_POST_SUCCESS', 'GET_ONE_POST_FAILURE'],
 	    promise: (0, _isomorphicFetch2.default)('http://jsonplaceholder.typicode.com/posts/' + postId)
 	  };
-	}
+		}
 
 /***/ },
 /* 245 */
@@ -32987,3 +33045,4 @@
 
 /***/ }
 /******/ ]);
+//# sourceMappingURL=app.bundle.js.map

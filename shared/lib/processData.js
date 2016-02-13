@@ -1,4 +1,4 @@
-export default function process (data, mapper) {
+export default function process (data: Object, mapper: { [key: string]: string | Function }): Object {
   let result = {}
 
   for (let key in mapper) {

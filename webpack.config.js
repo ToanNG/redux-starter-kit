@@ -1,6 +1,7 @@
 var webpack = require('webpack')
 
 module.exports = {
+  devtool: 'cheap-module-source-map',
   context: __dirname + '/client/scripts',
   entry: {
     app: './index.js'
