@@ -35,10 +35,14 @@ class Post extends Component {
     const { post } = this.props
     const selectedPost = post.get('selectedPost')
 
-    if (!selectedPost) return null
+    if (!selectedPost) {
+      return (
+        <div className='page'>Loading...</div>
+      )
+    }
 
     return (
-      <div>
+      <div className='page'>
         <h1>{selectedPost.get('title')}</h1>
         <p>{selectedPost.get('body')}</p>
       </div>

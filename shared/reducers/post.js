@@ -17,7 +17,8 @@ export default function postReducer (state = INITIAL_STATE, action) {
   switch (action.type) {
     case 'GET_POSTS':
       return state.merge({
-        isLoading: true
+        isLoading: true,
+        posts: []
       })
 
     case 'GET_POSTS_SUCCESS':

@@ -1,11 +1,14 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
+import RouteCSSTransitionGroup from './RouteCSSTransitionGroup'
 
 class App extends Component {
   static propTypes = {
-    children: PropTypes.object
+    children: PropTypes.object,
+    location: PropTypes.object
   };
   static childContextTypes = {
+    location: PropTypes.object,
     isInit: PropTypes.bool
   };
   state = {
@@ -14,6 +17,7 @@ class App extends Component {
 
   getChildContext () {
     return {
+      location: this.props.location,
       isInit: this.state.isInit
     }
   }
@@ -32,9 +36,12 @@ class App extends Component {
           {' '}
           <Link to='/about'>About</Link>
         </header>
-        <div>
+        <RouteCSSTransitionGroup
+          component='div' transitionName='page'
+          transitionEnterTimeout={500} transitionLeaveTimeout={250}
+        >
           {this.props.children}
-        </div>
+        </RouteCSSTransitionGroup>
       </div>
     )
   }

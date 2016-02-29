@@ -41,7 +41,7 @@ class Home extends Component {
     const { post } = this.props
 
     return (
-      <div>
+      <div className='page'>
         <h1>Home page</h1>
         <ImageComponent
           src='https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'

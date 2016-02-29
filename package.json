@@ -28,11 +28,13 @@
     "loaders.css": "^0.1.2",
     "morgan": "~1.6.1",
     "react": "^0.14.7",
+    "react-addons-css-transition-group": "^0.14.7",
     "react-dom": "^0.14.6",
     "react-loaders": "^2.0.0",
     "react-redux": "^4.4.0",
     "react-router": "^2.0.0-rc6",
     "react-router-redux": "^3.0.0",
+    "react-static-container": "^1.0.0",
     "redux": "^3.3.1",
     "redux-logger": "^2.5.0",
     "serve-favicon": "~2.3.0"
@@ -46,6 +48,7 @@
     "jsdom": "^8.0.2",
     "mocha": "^2.4.5",
     "myth-loader": "^1.0.1",
+    "pre-commit": "^1.1.2",
     "react-addons-test-utils": "^0.14.7",
     "rewire": "^2.5.1",
     "sass-loader": "^3.1.2",
@@ -65,5 +68,9 @@
       "__CLIENT__",
       "__DEV__"
     ]
-  }
+  },
+  "pre-commit": [
+    "build",
+    "test"
+  ]
 }
