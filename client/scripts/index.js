@@ -8,6 +8,9 @@ import routes from 'routes'
 import 'loaders.css/src/animations/ball-scale-multiple.scss'
 import 'app.css'
 
+// import all files in images folder
+require.context('../images', false, /^.*$/)
+
 // the router reducer (name "routing") is not an immutable obj
 const initialState = immutifyState({
   obj: window.__INITIAL_STATE__,

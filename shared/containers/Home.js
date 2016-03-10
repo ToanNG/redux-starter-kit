@@ -44,7 +44,7 @@ class Home extends Component {
       <div className='page'>
         <h1>Home page</h1>
         <ImageComponent
-          src='https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
+          src='/assets/googlelogo.png'
           style={{
             width: 272,
             height: 92

@@ -47,6 +47,7 @@
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.3",
     "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
     "jsdom": "^8.0.2",
     "mocha": "^2.4.5",
     "myth-loader": "^1.0.1",

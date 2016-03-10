@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 import RouteCSSTransitionGroup from './RouteCSSTransitionGroup'
 
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import getMuiTheme from 'material-ui/lib/styles/getMuiTheme'
+import themeDecorator from 'material-ui/lib/styles/theme-decorator'
+import AppBar from 'material-ui/lib/app-bar'
 import RaisedButton from 'material-ui/lib/raised-button'
 
 // Needed for onTouchTap
@@ -11,6 +14,9 @@ import RaisedButton from 'material-ui/lib/raised-button'
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin()
 
+@themeDecorator(getMuiTheme(null, {
+  userAgent: 'all'
+}))
 class App extends Component {
   static propTypes = {
     children: PropTypes.object,
@@ -38,6 +44,10 @@ class App extends Component {
   render () {
     return (
       <div>
+        <AppBar
+          title='Title'
+          titleStyle={{ fontWeight: 300 }}
+        />
         <header>
           Links:
           {' '}
