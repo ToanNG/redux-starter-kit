@@ -23,12 +23,13 @@ module.exports = {
     })
   ],
   resolve: {
-    modulesDirectories: ['node_modules', 'shared', 'client/scripts', 'client/styles']
+    modulesDirectories: ['node_modules', 'shared', 'client/scripts', 'client/styles', 'client/images']
   },
   module: {
     loaders: [
       { test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.s?css$/, loader: 'style!css!myth!sass' }
+      { test: /\.s?css$/, loader: 'style!css!myth!sass' },
+      { test: /\.(jpe?g|png|gif|svg)$/, loader: 'file?name=[name].[ext]' }
     ]
   }
 }
