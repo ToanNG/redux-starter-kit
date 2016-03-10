@@ -8,6 +8,8 @@ import themeDecorator from 'material-ui/lib/styles/theme-decorator'
 import AppBar from 'material-ui/lib/app-bar'
 import RaisedButton from 'material-ui/lib/raised-button'
 
+import { FormattedMessage } from 'react-intl'
+
 // Needed for onTouchTap
 // Can go away when react 1.0 release
 // Check this repo:
@@ -55,6 +57,7 @@ class App extends Component {
           {' '}
           <Link to='/about'>About</Link>
         </header>
+        <FormattedMessage id='greeting' values={{ name: 'Toan' }} />
         <RaisedButton label='Primary' primary />
         <RouteCSSTransitionGroup
           component='div' transitionName='page'
