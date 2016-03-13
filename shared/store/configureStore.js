@@ -3,11 +3,12 @@ import { browserHistory } from 'react-router'
 import createMemoryHistory from 'react-router/lib/createMemoryHistory'
 import { syncHistory } from 'react-router-redux'
 import createLogger from 'redux-logger'
+import thunk from 'redux-thunk'
 import rootReducer from '../reducers'
 import promise from '../middlewares/promise'
 
 export default function configureStore (initialState) {
-  const middlewares = [promise]
+  const middlewares = [thunk, promise]
 
   if (__CLIENT__) {
     middlewares.push(syncHistory(browserHistory))

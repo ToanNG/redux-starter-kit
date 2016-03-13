@@ -39,6 +39,7 @@
     "react-tap-event-plugin": "^0.2.2",
     "redux": "^3.3.1",
     "redux-logger": "^2.5.0",
+    "redux-thunk": "^2.0.1",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
