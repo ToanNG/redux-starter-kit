@@ -36,6 +36,9 @@ router.use((req, res, next) => {
             state: JSON.stringify(initialState)
           })
         })
+        .catch((error) => {
+          res.status(500).send(error.message)
+        })
     } else {
       res.status(404).send('Not found')
     }
