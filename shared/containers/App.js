@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { switchLocale } from '../lib/react-intl-redux'
-import { Link } from 'react-router'
+import { push } from 'react-router-redux'
 import RouteCSSTransitionGroup from './RouteCSSTransitionGroup'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -13,6 +13,7 @@ import IconButton from 'material-ui/lib/icon-button'
 import IconMenu from 'material-ui/lib/menus/icon-menu'
 import LanguageIcon from 'material-ui/lib/svg-icons/action/language'
 import MenuItem from 'material-ui/lib/menus/menu-item'
+import LeftNav from 'material-ui/lib/left-nav'
 
 import { FormattedMessage } from 'react-intl'
 
@@ -27,20 +28,25 @@ injectTapEventPlugin()
 }))
 @connect(
   state => ({ intl: state.intl }),
-  dispatch => ({ switchLocale: bindActionCreators(switchLocale, dispatch) })
+  dispatch => ({
+    switchLocale: bindActionCreators(switchLocale, dispatch),
+    push: bindActionCreators(push, dispatch)
+  })
 )
 class App extends Component {
   static propTypes = {
     children: PropTypes.object,
     location: PropTypes.object,
-    switchLocale: PropTypes.func
+    switchLocale: PropTypes.func,
+    push: PropTypes.func
   };
   static childContextTypes = {
     location: PropTypes.object,
     isInit: PropTypes.bool
   };
   state = {
-    isInit: true
+    isInit: true,
+    openNav: false
   };
 
   getChildContext () {
@@ -54,8 +60,13 @@ class App extends Component {
     this.setState({ isInit: false })
   }
 
-  _handleTouchTap = (locale) => {
-    this.props.switchLocale(locale)
+  _handleTouchTapLanguage = locale => this.props.switchLocale(locale);
+
+  _handleTouchTapMenuIcon = () => this.setState({ openNav: !this.state.openNav });
+
+  _handleTouchTapLink = (path) => {
+    this.props.push(path)
+    this.setState({ openNav: false })
   };
 
   render () {
@@ -77,22 +88,26 @@ class App extends Component {
             >
               <MenuItem
                 primaryText='English'
-                onTouchTap={this._handleTouchTap.bind(null, 'en')}
+                onTouchTap={this._handleTouchTapLanguage.bind(null, 'en')}
               />
               <MenuItem
                 primaryText='Vietnamese'
-                onTouchTap={this._handleTouchTap.bind(null, 'vi')}
+                onTouchTap={this._handleTouchTapLanguage.bind(null, 'vi')}
               />
             </IconMenu>
           }
+          onLeftIconButtonTouchTap={this._handleTouchTapMenuIcon}
         />
-        <header>
-          Links:
-          {' '}
-          <Link to='/'>Home</Link>
-          {' '}
-          <Link to='/about'>About</Link>
-        </header>
+        <LeftNav
+          docked={false}
+          width={200}
+          open={this.state.openNav}
+          onRequestChange={openNav => this.setState({ openNav })}
+        >
+          <MenuItem onTouchTap={this._handleTouchTapLink.bind(null, '/')}>Home</MenuItem>
+          <MenuItem onTouchTap={this._handleTouchTapLink.bind(null, '/about')}>About</MenuItem>
+        </LeftNav>
+
         <RouteCSSTransitionGroup
           component='div' transitionName='page'
           transitionEnterTimeout={500} transitionLeaveTimeout={250}

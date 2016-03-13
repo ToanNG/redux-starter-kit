@@ -78,6 +78,7 @@ body h1 {
 
 .page {
   position: absolute;
+  padding: 24px;
 }
 
 .page-enter {
