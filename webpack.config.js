@@ -1,4 +1,5 @@
 var webpack = require('webpack')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -11,6 +12,7 @@ module.exports = {
     filename: '[name].bundle.js'
   },
   plugins: [
+    new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development') // <-- change to production to remove logs and warnings
@@ -28,7 +30,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.s?css$/, loader: 'style!css!myth!sass' },
+      { test: /\.s?css$/, loader: ExtractTextPlugin.extract('style', 'css!myth!sass') },
       { test: /\.(jpe?g|png|gif|svg)$/, loader: 'file?name=[name].[ext]' }
     ]
   }
