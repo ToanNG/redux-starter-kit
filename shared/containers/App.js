@@ -6,8 +6,8 @@ import { push } from 'react-router-redux'
 import RouteCSSTransitionGroup from './RouteCSSTransitionGroup'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
-// import getMuiTheme from 'material-ui/lib/styles/getMuiTheme'
-// import themeDecorator from 'material-ui/lib/styles/theme-decorator'
+import getMuiTheme from 'material-ui/lib/styles/getMuiTheme'
+import themeDecorator from 'material-ui/lib/styles/theme-decorator'
 import AppBar from 'material-ui/lib/app-bar'
 import IconButton from 'material-ui/lib/icon-button'
 import IconMenu from 'material-ui/lib/menus/icon-menu'
@@ -29,9 +29,21 @@ injectTapEventPlugin()
 // add vietnamese data
 addLocaleData(vi)
 
-// @themeDecorator(getMuiTheme(null, {
-//   userAgent: 'all'
-// }))
+const setDefaultLocale = locale => target => {
+  target.needs = [
+    switchLocale.bind(null, {
+      locale,
+      dataUrl: `http://127.0.0.1:3000/locale-data/${locale}.json`
+    })
+  ]
+}
+
+// use this decorator after themeDecorator
+// to fix the conflict on static property "needs"
+@setDefaultLocale('vi')
+@themeDecorator(getMuiTheme(null, {
+  userAgent: 'all'
+}))
 @connect(
   state => ({ intl: state.intl }),
   dispatch => ({
@@ -54,14 +66,6 @@ class App extends Component {
     isInit: true,
     openNav: false
   };
-
-  // fetch default locale data
-  static needs = [
-    switchLocale.bind(null, {
-      locale: 'vi',
-      dataUrl: 'http://127.0.0.1:3000/locale-data/vi.json'
-    })
-  ];
 
   getChildContext () {
     return {
