@@ -25952,12 +25952,6 @@
 	    return _intlReducer.intlReducer;
 	  }
 	});
-	Object.defineProperty(exports, 'loadLocaleData', {
-	  enumerable: true,
-	  get: function get() {
-	    return _intlReducer.loadLocaleData;
-	  }
-	});
 
 	var _switchLocale = __webpack_require__(260);
 
@@ -30104,44 +30098,33 @@
 
 	'use strict';
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.intlReducer = intlReducer;
-	exports.loadLocaleData = loadLocaleData;
-	var localeData = {};
-	var initialState = {
+	var INITIAL_STATE = {
 	  locale: 'en',
 	  messages: {}
 	};
 
 	function intlReducer() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_STATE : arguments[0];
 	  var action = arguments[1];
 
 	  switch (action.type) {
 	    case 'SWITCH_LOCALE':
-	      var locale = action.payload.locale;
-	      return {
-	        locale: locale,
-	        messages: localeData[locale].messages
-	      };
+	      return _extends({}, state, action.payload);
 
 	    default:
 	      return state;
 	  }
-	}
-
-	function loadLocaleData(data) {
-	  var defaultLocale = arguments.length <= 1 || arguments[1] === undefined ? 'en' : arguments[1];
-
-	  localeData = data;
-	  initialState = data[defaultLocale];
 		}
 
 /***/ },
 /* 260 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -30149,10 +30132,26 @@
 	  value: true
 	});
 	exports.switchLocale = switchLocale;
-	function switchLocale(locale) {
-	  return {
-	    type: 'SWITCH_LOCALE',
-	    payload: { locale: locale }
+
+	var _isomorphicFetch = __webpack_require__(406);
+
+	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function switchLocale(_ref) {
+	  var locale = _ref.locale;
+	  var dataUrl = _ref.dataUrl;
+
+	  return function (dispatch) {
+	    return (0, _isomorphicFetch2.default)(dataUrl).then(function (response) {
+	      return response.json();
+	    }).then(function (messages) {
+	      return dispatch({
+	        type: 'SWITCH_LOCALE',
+	        payload: { locale: locale, messages: messages }
+	      });
+	    });
 	  };
 		}
 
@@ -30610,14 +30609,7 @@
 
 	var _reactIntlRedux = __webpack_require__(235);
 
-	var _localeData = __webpack_require__(270);
-
-	var _localeData2 = _interopRequireDefault(_localeData);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// load locale data and set default locale to "vi"
-	(0, _reactIntlRedux.loadLocaleData)(_localeData2.default, 'vi');
 
 	var rootReducer = (0, _redux.combineReducers)({
 	  post: _post2.default,
@@ -35872,77 +35864,9 @@
 
 
 /***/ },
-/* 270 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _en = __webpack_require__(271);
-
-	var _en2 = _interopRequireDefault(_en);
-
-	var _vi = __webpack_require__(272);
-
-	var _vi2 = _interopRequireDefault(_vi);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = {
-	  en: _en2.default,
-	  vi: _vi2.default
-	};
-	module.exports = exports['default'];
-
-/***/ },
-/* 271 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-	  locale: 'en',
-	  messages: {
-	    greeting: 'Hello, {name}'
-	  }
-	};
-	module.exports = exports['default'];
-
-/***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _reactIntl = __webpack_require__(237);
-
-	var _vi = __webpack_require__(273);
-
-	var _vi2 = _interopRequireDefault(_vi);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	(0, _reactIntl.addLocaleData)(_vi2.default);
-
-	exports.default = {
-	  locale: 'vi',
-	  messages: {
-	    greeting: 'Xin chào, {name}'
-	  }
-	};
-	module.exports = exports['default'];
-
-/***/ },
+/* 270 */,
+/* 271 */,
+/* 272 */,
 /* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -36089,7 +36013,9 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _dec, _dec2, _class, _class2, _temp2;
+	var _dec, _class, _class2, _temp2;
+	// import getMuiTheme from 'material-ui/lib/styles/getMuiTheme'
+	// import themeDecorator from 'material-ui/lib/styles/theme-decorator'
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -36114,14 +36040,6 @@
 	var _reactTapEventPlugin = __webpack_require__(288);
 
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
-
-	var _getMuiTheme = __webpack_require__(293);
-
-	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
-
-	var _themeDecorator = __webpack_require__(340);
-
-	var _themeDecorator2 = _interopRequireDefault(_themeDecorator);
 
 	var _appBar = __webpack_require__(341);
 
@@ -36149,6 +36067,10 @@
 
 	var _reactIntl = __webpack_require__(237);
 
+	var _vi = __webpack_require__(273);
+
+	var _vi2 = _interopRequireDefault(_vi);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36163,16 +36085,20 @@
 	// https://github.com/zilverline/react-tap-event-plugin
 	(0, _reactTapEventPlugin2.default)();
 
-	var App = (_dec = (0, _themeDecorator2.default)((0, _getMuiTheme2.default)(null, {
-	  userAgent: 'all'
-	})), _dec2 = (0, _reactRedux.connect)(function (state) {
+	// add vietnamese data
+	(0, _reactIntl.addLocaleData)(_vi2.default);
+
+	// @themeDecorator(getMuiTheme(null, {
+	//   userAgent: 'all'
+	// }))
+	var App = (_dec = (0, _reactRedux.connect)(function (state) {
 	  return { intl: state.intl };
 	}, function (dispatch) {
 	  return {
 	    switchLocale: (0, _redux.bindActionCreators)(_reactIntlRedux.switchLocale, dispatch),
 	    push: (0, _redux.bindActionCreators)(_reactRouterRedux.push, dispatch)
 	  };
-	}), _dec(_class = _dec2(_class = (_temp2 = _class2 = function (_Component) {
+	}), _dec(_class = (_temp2 = _class2 = function (_Component) {
 	  _inherits(App, _Component);
 
 	  function App() {
@@ -36190,7 +36116,10 @@
 	      isInit: true,
 	      openNav: false
 	    }, _this._handleTouchTapLanguage = function (locale) {
-	      return _this.props.switchLocale(locale);
+	      return _this.props.switchLocale({
+	        locale: locale,
+	        dataUrl: '/locale-data/' + locale + '.json'
+	      });
 	    }, _this._handleTouchTapMenuIcon = function () {
 	      return _this.setState({ openNav: !_this.state.openNav });
 	    }, _this._handleTouchTapLink = function (path) {
@@ -36198,6 +36127,8 @@
 	      _this.setState({ openNav: false });
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
+
+	  // fetch default locale data
 
 	  _createClass(App, [{
 	    key: 'getChildContext',
@@ -36236,11 +36167,11 @@
 	              anchorOrigin: { horizontal: 'right', vertical: 'top' }
 	            },
 	            _react2.default.createElement(_menuItem2.default, {
-	              primaryText: 'English',
+	              primaryText: _react2.default.createElement(_reactIntl.FormattedMessage, { id: 'english' }),
 	              onTouchTap: this._handleTouchTapLanguage.bind(null, 'en')
 	            }),
 	            _react2.default.createElement(_menuItem2.default, {
-	              primaryText: 'Vietnamese',
+	              primaryText: _react2.default.createElement(_reactIntl.FormattedMessage, { id: 'vietnamese' }),
 	              onTouchTap: this._handleTouchTapLanguage.bind(null, 'vi')
 	            })
 	          ),
@@ -36288,7 +36219,10 @@
 	}, _class2.childContextTypes = {
 	  location: _react.PropTypes.object,
 	  isInit: _react.PropTypes.bool
-	}, _temp2)) || _class) || _class);
+	}, _class2.needs = [_reactIntlRedux.switchLocale.bind(null, {
+	  locale: 'vi',
+	  dataUrl: 'http://127.0.0.1:3000/locale-data/vi.json'
+	})], _temp2)) || _class);
 	exports.default = App;
 	module.exports = exports['default'];
 
@@ -42133,46 +42067,7 @@
 
 
 /***/ },
-/* 340 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = function (customTheme) {
-
-	  return function (Component) {
-
-	    return _react2.default.createClass({
-
-	      childContextTypes: {
-	        muiTheme: _react2.default.PropTypes.object
-	      },
-
-	      getChildContext: function getChildContext() {
-	        return {
-	          muiTheme: customTheme
-	        };
-	      },
-	      render: function render() {
-	        return _react2.default.createElement(Component, this.props);
-	      }
-	    });
-	  };
-	};
-
-	module.exports = exports['default'];
-
-/***/ },
+/* 340 */,
 /* 341 */
 /***/ function(module, exports, __webpack_require__) {
 

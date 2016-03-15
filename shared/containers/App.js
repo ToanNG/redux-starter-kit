@@ -6,14 +6,17 @@ import { push } from 'react-router-redux'
 import RouteCSSTransitionGroup from './RouteCSSTransitionGroup'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import getMuiTheme from 'material-ui/lib/styles/getMuiTheme'
-import themeDecorator from 'material-ui/lib/styles/theme-decorator'
+// import getMuiTheme from 'material-ui/lib/styles/getMuiTheme'
+// import themeDecorator from 'material-ui/lib/styles/theme-decorator'
 import AppBar from 'material-ui/lib/app-bar'
 import IconButton from 'material-ui/lib/icon-button'
 import IconMenu from 'material-ui/lib/menus/icon-menu'
 import LanguageIcon from 'material-ui/lib/svg-icons/action/language'
 import MenuItem from 'material-ui/lib/menus/menu-item'
 import LeftNav from 'material-ui/lib/left-nav'
+
+import { addLocaleData } from 'react-intl'
+import vi from 'react-intl/locale-data/vi'
 
 import { FormattedMessage } from 'react-intl'
 
@@ -23,9 +26,12 @@ import { FormattedMessage } from 'react-intl'
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin()
 
-@themeDecorator(getMuiTheme(null, {
-  userAgent: 'all'
-}))
+// add vietnamese data
+addLocaleData(vi)
+
+// @themeDecorator(getMuiTheme(null, {
+//   userAgent: 'all'
+// }))
 @connect(
   state => ({ intl: state.intl }),
   dispatch => ({
@@ -49,6 +55,14 @@ class App extends Component {
     openNav: false
   };
 
+  // fetch default locale data
+  static needs = [
+    switchLocale.bind(null, {
+      locale: 'vi',
+      dataUrl: 'http://127.0.0.1:3000/locale-data/vi.json'
+    })
+  ];
+
   getChildContext () {
     return {
       location: this.props.location,
@@ -60,7 +74,10 @@ class App extends Component {
     this.setState({ isInit: false })
   }
 
-  _handleTouchTapLanguage = locale => this.props.switchLocale(locale);
+  _handleTouchTapLanguage = locale => this.props.switchLocale({
+    locale,
+    dataUrl: `/locale-data/${locale}.json`
+  });
 
   _handleTouchTapMenuIcon = () => this.setState({ openNav: !this.state.openNav });
 
@@ -87,11 +104,15 @@ class App extends Component {
               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
               <MenuItem
-                primaryText='English'
+                primaryText={
+                  <FormattedMessage id='english' />
+                }
                 onTouchTap={this._handleTouchTapLanguage.bind(null, 'en')}
               />
               <MenuItem
-                primaryText='Vietnamese'
+                primaryText={
+                  <FormattedMessage id='vietnamese' />
+                }
                 onTouchTap={this._handleTouchTapLanguage.bind(null, 'vi')}
               />
             </IconMenu>

@@ -1,24 +1,17 @@
-let localeData = {}
-let initialState = {
+const INITIAL_STATE = {
   locale: 'en',
   messages: {}
 }
 
-export function intlReducer (state = initialState, action) {
+export function intlReducer (state = INITIAL_STATE, action) {
   switch (action.type) {
     case 'SWITCH_LOCALE':
-      const locale = action.payload.locale
       return {
-        locale,
-        messages: localeData[locale].messages
+        ...state,
+        ...action.payload
       }
 
     default:
       return state
   }
-}
-
-export function loadLocaleData (data, defaultLocale = 'en') {
-  localeData = data
-  initialState = data[defaultLocale]
 }
