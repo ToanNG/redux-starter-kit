@@ -31,3 +31,10 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('react-root')
 )
+
+// register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/javascripts/serviceWorker.js', {
+    scope: '/'
+  })
+}

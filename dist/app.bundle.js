@@ -102,7 +102,14 @@
 	      _routes2.default
 	    )
 	  )
-		), document.getElementById('react-root'));
+	), document.getElementById('react-root'));
+
+	// register service worker
+	if ('serviceWorker' in navigator) {
+	  navigator.serviceWorker.register('/javascripts/serviceWorker.js', {
+	    scope: '/'
+	  });
+		}
 
 /***/ },
 /* 1 */
