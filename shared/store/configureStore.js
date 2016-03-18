@@ -6,9 +6,10 @@ import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import rootReducer from '../reducers'
 import promise from '../middlewares/promise'
+import dataloader from '../middlewares/dataloader'
 
 export default function configureStore (initialState) {
-  const middlewares = [thunk, promise]
+  const middlewares = [thunk, dataloader, promise]
 
   if (__CLIENT__) {
     middlewares.push(syncHistory(browserHistory))
