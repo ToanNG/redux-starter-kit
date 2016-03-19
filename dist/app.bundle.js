@@ -36375,6 +36375,31 @@
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
+	var cache = {};
+
+	/*
+	 * note: dispatched dataloader is cached by its name.
+	 * That means you should NOT use a bound action as
+	 * dataloader. i.e.
+	 *   {
+	 *     dataloader: getFoo.bind(null, 'bar'),
+	 *     data: state => state.baz.get('foo'),
+	 *     ...
+	 *   }
+	 * It also makes no sense, since the bound action will
+	 * update the dependency data diffrently from the original
+	 * action. The good practice is creating another action
+	 * creator, and another dependency data, like:
+	 *   function getBar () {
+	 *     return getFoo.call(null, 'bar')
+	 *   }
+	 *   ...
+	 *   {
+	 *     dataloader: getBar,
+	 *     data: state => state.baz.get('bar'),
+	 *     ...
+	 *   }
+	 */
 	function dataloaderMiddleware(store) {
 	  return function (next) {
 	    return function (action) {
@@ -36384,6 +36409,7 @@
 
 	      var rest = _objectWithoutProperties(action, ["dataloader", "data", "action"]);
 
+	      var promise = undefined;
 	      if (!dataloader) {
 	        return next(action);
 	      }
@@ -36393,11 +36419,20 @@
 	        return store.dispatch(mainAction(data(store.getState())));
 	      }
 
+	      // try getting dispatched dataloader from cache
+	      if (cache[dataloader.name]) {
+	        promise = cache[dataloader.name];
+	      } else {
+	        promise = store.dispatch(dataloader());
+	        cache[dataloader.name] = promise;
+	      }
+
 	      // if no data, dispatch the loader action
-	      return store.dispatch(dataloader())
+	      return promise
 	      // use store.dispatch instead of next in case of
 	      // mainAction is a nested data loader
 	      .then(function () {
+	        delete cache[dataloader.name];
 	        return store.dispatch(mainAction(data(store.getState())));
 	      });
 	    };
