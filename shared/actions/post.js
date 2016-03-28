@@ -14,7 +14,12 @@ export function getPosts () {
 
 export function getOnePost ({ postId }) {
   return {
-    dataloader: getSettings,
+    dataloader: () => dispatch => {
+      dispatch({ type: 'GET_SETTINGS' })
+      return fetch('http://localhost:3000/settings.json')
+        .then(response => response.json())
+        .then(result => dispatch({ type: 'GET_SETTINGS_SUCCESS', result }))
+    },
     data: state => state.setting.get('remoteUrl'),
     action: data => dispatch => {
       dispatch({ type: 'GET_ONE_POST' })

@@ -4,6 +4,7 @@ import { fromJS } from 'immutable'
 import ReactTestUtils from 'react-addons-test-utils'
 import { expect } from 'chai'
 import { spy } from 'sinon'
+
 import ListComponent from '../../shared/components/List'
 
 const {renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate} = ReactTestUtils

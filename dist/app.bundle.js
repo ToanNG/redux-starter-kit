@@ -72,14 +72,14 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	__webpack_require__(419);
+	__webpack_require__(420);
 
-	__webpack_require__(423);
+	__webpack_require__(424);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// import all files in images folder
-	__webpack_require__(425);
+	__webpack_require__(426);
 
 	// the router reducer (name "routing") is not an immutable obj
 	var initialState = (0, _immutifyState2.default)({
@@ -36497,15 +36497,15 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Login = __webpack_require__(414);
+	var _Login = __webpack_require__(415);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Post = __webpack_require__(417);
+	var _Post = __webpack_require__(418);
 
 	var _Post2 = _interopRequireDefault(_Post);
 
-	var _About = __webpack_require__(418);
+	var _About = __webpack_require__(419);
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -52856,11 +52856,11 @@
 
 	var PostActions = _interopRequireWildcard(_post);
 
-	var _Image = __webpack_require__(408);
+	var _Image = __webpack_require__(409);
 
 	var _Image2 = _interopRequireDefault(_Image);
 
-	var _List = __webpack_require__(413);
+	var _List = __webpack_require__(414);
 
 	var _List2 = _interopRequireDefault(_List);
 
@@ -52982,7 +52982,16 @@
 	  var postId = _ref.postId;
 
 	  return {
-	    dataloader: _setting.getSettings,
+	    dataloader: function dataloader() {
+	      return function (dispatch) {
+	        dispatch({ type: 'GET_SETTINGS' });
+	        return (0, _isomorphicFetch2.default)('http://localhost:3000/settings.json').then(function (response) {
+	          return response.json();
+	        }).then(function (result) {
+	          return dispatch({ type: 'GET_SETTINGS_SUCCESS', result: result });
+	        });
+	      };
+	    },
 	    data: function data(state) {
 	      return state.setting.get('remoteUrl');
 	    },
@@ -53024,7 +53033,8 @@
 		}
 
 /***/ },
-/* 408 */
+/* 408 */,
+/* 409 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53041,7 +53051,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactLoaders = __webpack_require__(409);
+	var _reactLoaders = __webpack_require__(410);
 
 	var _reactLoaders2 = _interopRequireDefault(_reactLoaders);
 
@@ -53052,6 +53062,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var delay = 500;
 
 	var ImageComponent = (_temp2 = _class = function (_Component) {
 	  _inherits(ImageComponent, _Component);
@@ -53067,7 +53079,10 @@
 	      args[_key] = arguments[_key];
 	    }
 
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ImageComponent)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = { isLoading: true }, _this.componentDidMount = function () {
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ImageComponent)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+	      isLoading: true,
+	      showLoader: true
+	    }, _this.componentDidMount = function () {
 	      _this._checkValidImage();
 	    }, _this._checkValidImage = function () {
 	      if (window && window.Image) {
@@ -53078,19 +53093,27 @@
 	      }
 	    }, _this._handleLoad = function () {
 	      _this.setState({ isLoading: false }, function () {
-	        return _this.props.onLoad();
+	        _this.props.onLoad();
+	        _this._hideLoader();
 	      });
 	    }, _this._handleError = function () {
-	      _this.setState({ isLoading: true }, function () {
-	        return _this.props.onError();
+	      _this.setState({ isLoading: false }, function () {
+	        _this.props.onError();
+	        _this._hideLoader();
 	      });
+	    }, _this._hideLoader = function () {
+	      setTimeout(function () {
+	        _this.setState({ showLoader: false });
+	      }, delay);
 	    }, _this.render = function () {
 	      var _this$props = _this.props;
 	      var src = _this$props.src;
 	      var className = _this$props.className;
 	      var style = _this$props.style;
 	      var loader = _this$props.loader;
-	      var isLoading = _this.state.isLoading;
+	      var _this$state = _this.state;
+	      var isLoading = _this$state.isLoading;
+	      var showLoader = _this$state.showLoader;
 
 	      if (!isLoading) {
 	        style = _extends({}, style, {
@@ -53104,14 +53127,14 @@
 	        _react2.default.createElement(
 	          'div',
 	          { style: {
-	              display: 'flex',
+	              display: showLoader ? 'flex' : 'none',
 	              alignItems: 'center',
 	              justifyContent: 'center',
 	              width: '100%',
 	              height: '100%',
 	              background: '#CCC',
 	              opacity: +isLoading,
-	              transition: 'opacity 500ms'
+	              transition: 'opacity ' + delay + 'ms'
 	            } },
 	          loader
 	        )
@@ -53140,12 +53163,12 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 409 */
+/* 410 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function webpackUniversalModuleDefinition(root, factory) {
 		if(true)
-			module.exports = factory(__webpack_require__(1), __webpack_require__(410), __webpack_require__(412));
+			module.exports = factory(__webpack_require__(1), __webpack_require__(411), __webpack_require__(413));
 		else if(typeof define === 'function' && define.amd)
 			define(["react", "merge", "classnames"], factory);
 		else {
@@ -53361,7 +53384,7 @@
 	;
 
 /***/ },
-/* 410 */
+/* 411 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/*!
@@ -53539,10 +53562,10 @@
 		}
 
 	})(typeof module === 'object' && module && typeof module.exports === 'object' && module.exports);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(411)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(412)(module)))
 
 /***/ },
-/* 411 */
+/* 412 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -53558,7 +53581,7 @@
 
 
 /***/ },
-/* 412 */
+/* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -53612,7 +53635,7 @@
 
 
 /***/ },
-/* 413 */
+/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53681,7 +53704,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 414 */
+/* 415 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53702,11 +53725,11 @@
 
 	var _reactRedux = __webpack_require__(158);
 
-	var _user = __webpack_require__(415);
+	var _user = __webpack_require__(416);
 
 	var UserActions = _interopRequireWildcard(_user);
 
-	var _raisedButton = __webpack_require__(416);
+	var _raisedButton = __webpack_require__(417);
 
 	var _raisedButton2 = _interopRequireDefault(_raisedButton);
 
@@ -53760,7 +53783,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 415 */
+/* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53781,7 +53804,7 @@
 		}
 
 /***/ },
-/* 416 */
+/* 417 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54229,7 +54252,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 417 */
+/* 418 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54338,7 +54361,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 418 */
+/* 419 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54369,27 +54392,27 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 419 */
+/* 420 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 420 */,
 /* 421 */,
 /* 422 */,
-/* 423 */
+/* 423 */,
+/* 424 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 424 */,
-/* 425 */
+/* 425 */,
+/* 426 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./googlelogo.png": 426
+		"./googlelogo.png": 427
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -54402,11 +54425,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 425;
+	webpackContext.id = 426;
 
 
 /***/ },
-/* 426 */
+/* 427 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "googlelogo.png";
