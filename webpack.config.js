@@ -21,7 +21,8 @@ module.exports = {
     new webpack.DefinePlugin({
       __CLIENT__: true,
       __SERVER__: false,
-      __DEV__: true // <-- disable redux-logger
+      __DEV__: false, // <-- disable redux-logger
+      __PERF__: true // <-- disable perf tool
     })
   ],
   resolve: {

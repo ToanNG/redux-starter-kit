@@ -75,7 +75,8 @@
     ],
     "globals": [
       "__CLIENT__",
-      "__DEV__"
+      "__DEV__",
+      "__PERF__"
     ]
   },
   "pre-commit": [
