@@ -1,7 +1,6 @@
 global.__CLIENT__ = false
 global.__SERVER__ = true
 global.__DEV__ = false
-global.__PERF__ = false
 
 import express from 'express'
 import path from 'path'
