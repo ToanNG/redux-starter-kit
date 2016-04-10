@@ -5,6 +5,7 @@ import { routeActions } from 'react-router-redux'
 import * as PostActions from '../actions/post'
 import ImageComponent from '../components/Image'
 import ListComponent from '../components/List'
+import { Grid, Row, Col } from 'react-flexbox-grid'
 
 @connect(
   state => ({ post: state.post }),
@@ -42,6 +43,12 @@ class Home extends Component {
 
     return (
       <div className='page'>
+        <Grid>
+          <Row>
+            <Col xs={12} md={6}>Hello,</Col>
+            <Col xs={12} md={6}>world!</Col>
+          </Row>
+        </Grid>
         <h1>Home page</h1>
         <ImageComponent
           src='/assets/googlelogo.png'

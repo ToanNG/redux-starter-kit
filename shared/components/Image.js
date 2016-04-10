@@ -1,6 +1,19 @@
 import React, { Component, PropTypes } from 'react'
-import Loader from 'react-loaders'
+import RefreshIndicator from 'material-ui/lib/refresh-indicator'
 let delay = 500
+
+const loader = <RefreshIndicator
+  size={40}
+  left={0}
+  top={0}
+  status='loading'
+  loadingColor='white'
+  style={{
+    position: 'relative',
+    background: 'transparent',
+    boxShadow: 'none'
+  }}
+/>
 
 class ImageComponent extends Component {
   static propTypes = {
@@ -12,7 +25,7 @@ class ImageComponent extends Component {
     style: PropTypes.object
   };
   static defaultProps = {
-    loader: <Loader type='ball-scale-multiple' />,
+    loader,
     onLoad: () => undefined,
     onError: () => undefined
   };
@@ -58,6 +71,16 @@ class ImageComponent extends Component {
   render = () => {
     let { src, className, style, loader } = this.props
     let { isLoading, showLoader } = this.state
+    let loaderStyle = {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      height: '100%',
+      background: '#CCC',
+      opacity: +isLoading,
+      transition: `opacity ${delay}ms`
+    }
 
     if (!isLoading) {
       style = {
@@ -68,18 +91,7 @@ class ImageComponent extends Component {
 
     return (
       <div className={className} style={style}>
-        <div style={{
-          display: showLoader ? 'flex' : 'none',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-          height: '100%',
-          background: '#CCC',
-          opacity: +isLoading,
-          transition: `opacity ${delay}ms`
-        }}>
-          {loader}
-        </div>
+        {showLoader ? <div style={loaderStyle}>{loader}</div> : null}
       </div>
     )
   };

@@ -30,7 +30,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.s?css$/, loader: ExtractTextPlugin.extract('style', 'css!myth!sass') },
+      { test: /\.s?css$/, loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&localIdentName=[name]__[local]!myth!sass') },
       { test: /\.(jpe?g|png|gif|svg)$/, loader: 'file?name=[name].[ext]' }
     ]
   }

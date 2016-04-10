@@ -6,7 +6,6 @@ import { IntlProvider } from 'lib/react-intl-redux'
 import configureStore from 'store/configureStore'
 import immutifyState from 'lib/immutifyState'
 import routes from 'routes'
-import 'loaders.css/src/animations/ball-scale-multiple.scss'
 import 'app.css'
 
 // import all files in images folder
