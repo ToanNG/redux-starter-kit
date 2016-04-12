@@ -72,12 +72,16 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	__webpack_require__(428);
+	__webpack_require__(427);
+
+	__webpack_require__(429);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// import all files in images folder
-	__webpack_require__(430);
+	__webpack_require__(431);
+
+	// expose perf tool
 
 	// the router reducer (name "routing") is not an immutable obj
 	var initialState = (0, _immutifyState2.default)({
@@ -36491,19 +36495,19 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Home = __webpack_require__(408);
+	var _Home = __webpack_require__(407);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Login = __webpack_require__(423);
+	var _Login = __webpack_require__(422);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Post = __webpack_require__(426);
+	var _Post = __webpack_require__(425);
 
 	var _Post2 = _interopRequireDefault(_Post);
 
-	var _About = __webpack_require__(427);
+	var _About = __webpack_require__(426);
 
 	var _About2 = _interopRequireDefault(_About);
 
@@ -36563,13 +36567,9 @@
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
-	var _reactAddonsPerf = __webpack_require__(406);
-
-	var _reactAddonsPerf2 = _interopRequireDefault(_reactAddonsPerf);
-
 	var _reactIntl = __webpack_require__(237);
 
-	var _vi = __webpack_require__(407);
+	var _vi = __webpack_require__(406);
 
 	var _vi2 = _interopRequireDefault(_vi);
 
@@ -36618,23 +36618,6 @@
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(App)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
 	      isInit: true,
 	      openNav: false
-	    }, _this._handleKeyDown = function (e) {
-	      if (!e.ctrlKey) return;
-
-	      switch (e.keyCode) {
-	        case 90:
-	          console.debug('Perf start');
-	          _reactAddonsPerf2.default.start();
-	          break;
-	        case 88:
-	          console.debug('Perf stop');
-	          _reactAddonsPerf2.default.stop();
-	          break;
-	        case 67:
-	          console.debug('Perf print wasted');
-	          _reactAddonsPerf2.default.printWasted();
-	          break;
-	      }
 	    }, _this._handleTouchTapMenuIcon = function () {
 	      return _this.setState({ openNav: !_this.state.openNav });
 	    }, _this._handleNavRequestChange = function (openNav) {
@@ -36649,16 +36632,6 @@
 	        location: this.props.location,
 	        isInit: this.state.isInit
 	      };
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      window.addEventListener('keydown', this._handleKeyDown);
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      window.removeEventListener('keydown', this._handleKeyDown);
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
@@ -53026,16 +52999,10 @@
 /* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(141);
-
-/***/ },
-/* 407 */
-/***/ function(module, exports, __webpack_require__) {
-
 	!function(e,t){ true?module.exports=t():"function"==typeof define&&define.amd?define(t):(e.ReactIntlLocaleData=e.ReactIntlLocaleData||{},e.ReactIntlLocaleData.vi=t())}(this,function(){"use strict";var e=[{locale:"vi",pluralRuleFunction:function(e,t){return t&&1==e?"one":"other"},fields:{year:{displayName:"Năm",relative:{0:"năm nay",1:"năm sau","-1":"năm ngoái"},relativeTime:{future:{other:"sau {0} năm nữa"},past:{other:"{0} năm trước"}}},month:{displayName:"Tháng",relative:{0:"tháng này",1:"tháng sau","-1":"tháng trước"},relativeTime:{future:{other:"sau {0} tháng nữa"},past:{other:"{0} tháng trước"}}},day:{displayName:"Ngày",relative:{0:"Hôm nay",1:"Ngày mai",2:"Ngày kia","-2":"Hôm kia","-1":"Hôm qua"},relativeTime:{future:{other:"sau {0} ngày nữa"},past:{other:"{0} ngày trước"}}},hour:{displayName:"Giờ",relativeTime:{future:{other:"sau {0} giờ nữa"},past:{other:"{0} giờ trước"}}},minute:{displayName:"Phút",relativeTime:{future:{other:"sau {0} phút nữa"},past:{other:"{0} phút trước"}}},second:{displayName:"Giây",relative:{0:"bây giờ"},relativeTime:{future:{other:"sau {0} giây nữa"},past:{other:"{0} giây trước"}}}}}];return e});
 
 /***/ },
-/* 408 */
+/* 407 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53058,19 +53025,19 @@
 
 	var _reactRouterRedux = __webpack_require__(264);
 
-	var _post = __webpack_require__(409);
+	var _post = __webpack_require__(408);
 
 	var PostActions = _interopRequireWildcard(_post);
 
-	var _Image = __webpack_require__(411);
+	var _Image = __webpack_require__(410);
 
 	var _Image2 = _interopRequireDefault(_Image);
 
-	var _List = __webpack_require__(413);
+	var _List = __webpack_require__(412);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _reactFlexboxGrid = __webpack_require__(414);
+	var _reactFlexboxGrid = __webpack_require__(413);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -53170,7 +53137,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 409 */
+/* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53185,7 +53152,7 @@
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
-	var _setting = __webpack_require__(410);
+	var _setting = __webpack_require__(409);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53235,7 +53202,7 @@
 		}
 
 /***/ },
-/* 410 */
+/* 409 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53259,7 +53226,7 @@
 		}
 
 /***/ },
-/* 411 */
+/* 410 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53276,7 +53243,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _refreshIndicator = __webpack_require__(412);
+	var _refreshIndicator = __webpack_require__(411);
 
 	var _refreshIndicator2 = _interopRequireDefault(_refreshIndicator);
 
@@ -53403,7 +53370,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 412 */
+/* 411 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53782,7 +53749,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 413 */
+/* 412 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53851,7 +53818,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 414 */
+/* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53859,15 +53826,15 @@
 	exports.__esModule = true;
 	exports.Col = exports.Row = exports.Grid = undefined;
 
-	var _Grid2 = __webpack_require__(415);
+	var _Grid2 = __webpack_require__(414);
 
 	var _Grid3 = _interopRequireDefault(_Grid2);
 
-	var _Row2 = __webpack_require__(421);
+	var _Row2 = __webpack_require__(420);
 
 	var _Row3 = _interopRequireDefault(_Row2);
 
-	var _Col2 = __webpack_require__(422);
+	var _Col2 = __webpack_require__(421);
 
 	var _Col3 = _interopRequireDefault(_Col2);
 
@@ -53878,7 +53845,7 @@
 	exports.Col = _Col3.default;
 
 /***/ },
-/* 415 */
+/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53889,11 +53856,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(416);
+	var _classnames = __webpack_require__(415);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _flexboxgrid = __webpack_require__(417);
+	var _flexboxgrid = __webpack_require__(416);
 
 	var _flexboxgrid2 = _interopRequireDefault(_flexboxgrid);
 
@@ -53936,7 +53903,7 @@
 	};
 
 /***/ },
-/* 416 */
+/* 415 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -53990,17 +53957,17 @@
 
 
 /***/ },
-/* 417 */
+/* 416 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container-fluid":"flexboxgrid__container-fluid","container":"flexboxgrid__container","row":"flexboxgrid__row","reverse":"flexboxgrid__reverse","col":"flexboxgrid__col","col-xs":"flexboxgrid__col-xs","col-xs-1":"flexboxgrid__col-xs-1","col-xs-2":"flexboxgrid__col-xs-2","col-xs-3":"flexboxgrid__col-xs-3","col-xs-4":"flexboxgrid__col-xs-4","col-xs-5":"flexboxgrid__col-xs-5","col-xs-6":"flexboxgrid__col-xs-6","col-xs-7":"flexboxgrid__col-xs-7","col-xs-8":"flexboxgrid__col-xs-8","col-xs-9":"flexboxgrid__col-xs-9","col-xs-10":"flexboxgrid__col-xs-10","col-xs-11":"flexboxgrid__col-xs-11","col-xs-12":"flexboxgrid__col-xs-12","col-xs-offset-1":"flexboxgrid__col-xs-offset-1","col-xs-offset-2":"flexboxgrid__col-xs-offset-2","col-xs-offset-3":"flexboxgrid__col-xs-offset-3","col-xs-offset-4":"flexboxgrid__col-xs-offset-4","col-xs-offset-5":"flexboxgrid__col-xs-offset-5","col-xs-offset-6":"flexboxgrid__col-xs-offset-6","col-xs-offset-7":"flexboxgrid__col-xs-offset-7","col-xs-offset-8":"flexboxgrid__col-xs-offset-8","col-xs-offset-9":"flexboxgrid__col-xs-offset-9","col-xs-offset-10":"flexboxgrid__col-xs-offset-10","col-xs-offset-11":"flexboxgrid__col-xs-offset-11","col-xs-offset-12":"flexboxgrid__col-xs-offset-12","start-xs":"flexboxgrid__start-xs","center-xs":"flexboxgrid__center-xs","end-xs":"flexboxgrid__end-xs","top-xs":"flexboxgrid__top-xs","middle-xs":"flexboxgrid__middle-xs","bottom-xs":"flexboxgrid__bottom-xs","around-xs":"flexboxgrid__around-xs","between-xs":"flexboxgrid__between-xs","first-xs":"flexboxgrid__first-xs","last-xs":"flexboxgrid__last-xs","col-sm":"flexboxgrid__col-sm","col-sm-1":"flexboxgrid__col-sm-1","col-sm-2":"flexboxgrid__col-sm-2","col-sm-3":"flexboxgrid__col-sm-3","col-sm-4":"flexboxgrid__col-sm-4","col-sm-5":"flexboxgrid__col-sm-5","col-sm-6":"flexboxgrid__col-sm-6","col-sm-7":"flexboxgrid__col-sm-7","col-sm-8":"flexboxgrid__col-sm-8","col-sm-9":"flexboxgrid__col-sm-9","col-sm-10":"flexboxgrid__col-sm-10","col-sm-11":"flexboxgrid__col-sm-11","col-sm-12":"flexboxgrid__col-sm-12","col-sm-offset-1":"flexboxgrid__col-sm-offset-1","col-sm-offset-2":"flexboxgrid__col-sm-offset-2","col-sm-offset-3":"flexboxgrid__col-sm-offset-3","col-sm-offset-4":"flexboxgrid__col-sm-offset-4","col-sm-offset-5":"flexboxgrid__col-sm-offset-5","col-sm-offset-6":"flexboxgrid__col-sm-offset-6","col-sm-offset-7":"flexboxgrid__col-sm-offset-7","col-sm-offset-8":"flexboxgrid__col-sm-offset-8","col-sm-offset-9":"flexboxgrid__col-sm-offset-9","col-sm-offset-10":"flexboxgrid__col-sm-offset-10","col-sm-offset-11":"flexboxgrid__col-sm-offset-11","col-sm-offset-12":"flexboxgrid__col-sm-offset-12","start-sm":"flexboxgrid__start-sm","center-sm":"flexboxgrid__center-sm","end-sm":"flexboxgrid__end-sm","top-sm":"flexboxgrid__top-sm","middle-sm":"flexboxgrid__middle-sm","bottom-sm":"flexboxgrid__bottom-sm","around-sm":"flexboxgrid__around-sm","between-sm":"flexboxgrid__between-sm","first-sm":"flexboxgrid__first-sm","last-sm":"flexboxgrid__last-sm","col-md":"flexboxgrid__col-md","col-md-1":"flexboxgrid__col-md-1","col-md-2":"flexboxgrid__col-md-2","col-md-3":"flexboxgrid__col-md-3","col-md-4":"flexboxgrid__col-md-4","col-md-5":"flexboxgrid__col-md-5","col-md-6":"flexboxgrid__col-md-6","col-md-7":"flexboxgrid__col-md-7","col-md-8":"flexboxgrid__col-md-8","col-md-9":"flexboxgrid__col-md-9","col-md-10":"flexboxgrid__col-md-10","col-md-11":"flexboxgrid__col-md-11","col-md-12":"flexboxgrid__col-md-12","col-md-offset-1":"flexboxgrid__col-md-offset-1","col-md-offset-2":"flexboxgrid__col-md-offset-2","col-md-offset-3":"flexboxgrid__col-md-offset-3","col-md-offset-4":"flexboxgrid__col-md-offset-4","col-md-offset-5":"flexboxgrid__col-md-offset-5","col-md-offset-6":"flexboxgrid__col-md-offset-6","col-md-offset-7":"flexboxgrid__col-md-offset-7","col-md-offset-8":"flexboxgrid__col-md-offset-8","col-md-offset-9":"flexboxgrid__col-md-offset-9","col-md-offset-10":"flexboxgrid__col-md-offset-10","col-md-offset-11":"flexboxgrid__col-md-offset-11","col-md-offset-12":"flexboxgrid__col-md-offset-12","start-md":"flexboxgrid__start-md","center-md":"flexboxgrid__center-md","end-md":"flexboxgrid__end-md","top-md":"flexboxgrid__top-md","middle-md":"flexboxgrid__middle-md","bottom-md":"flexboxgrid__bottom-md","around-md":"flexboxgrid__around-md","between-md":"flexboxgrid__between-md","first-md":"flexboxgrid__first-md","last-md":"flexboxgrid__last-md","col-lg":"flexboxgrid__col-lg","col-lg-1":"flexboxgrid__col-lg-1","col-lg-2":"flexboxgrid__col-lg-2","col-lg-3":"flexboxgrid__col-lg-3","col-lg-4":"flexboxgrid__col-lg-4","col-lg-5":"flexboxgrid__col-lg-5","col-lg-6":"flexboxgrid__col-lg-6","col-lg-7":"flexboxgrid__col-lg-7","col-lg-8":"flexboxgrid__col-lg-8","col-lg-9":"flexboxgrid__col-lg-9","col-lg-10":"flexboxgrid__col-lg-10","col-lg-11":"flexboxgrid__col-lg-11","col-lg-12":"flexboxgrid__col-lg-12","col-lg-offset-1":"flexboxgrid__col-lg-offset-1","col-lg-offset-2":"flexboxgrid__col-lg-offset-2","col-lg-offset-3":"flexboxgrid__col-lg-offset-3","col-lg-offset-4":"flexboxgrid__col-lg-offset-4","col-lg-offset-5":"flexboxgrid__col-lg-offset-5","col-lg-offset-6":"flexboxgrid__col-lg-offset-6","col-lg-offset-7":"flexboxgrid__col-lg-offset-7","col-lg-offset-8":"flexboxgrid__col-lg-offset-8","col-lg-offset-9":"flexboxgrid__col-lg-offset-9","col-lg-offset-10":"flexboxgrid__col-lg-offset-10","col-lg-offset-11":"flexboxgrid__col-lg-offset-11","col-lg-offset-12":"flexboxgrid__col-lg-offset-12","start-lg":"flexboxgrid__start-lg","center-lg":"flexboxgrid__center-lg","end-lg":"flexboxgrid__end-lg","top-lg":"flexboxgrid__top-lg","middle-lg":"flexboxgrid__middle-lg","bottom-lg":"flexboxgrid__bottom-lg","around-lg":"flexboxgrid__around-lg","between-lg":"flexboxgrid__between-lg","first-lg":"flexboxgrid__first-lg","last-lg":"flexboxgrid__last-lg"};
 
 /***/ },
+/* 417 */,
 /* 418 */,
 /* 419 */,
-/* 420 */,
-/* 421 */
+/* 420 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54011,11 +53978,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(416);
+	var _classnames = __webpack_require__(415);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _flexboxgrid = __webpack_require__(417);
+	var _flexboxgrid = __webpack_require__(416);
 
 	var _flexboxgrid2 = _interopRequireDefault(_flexboxgrid);
 
@@ -54083,7 +54050,7 @@
 	};
 
 /***/ },
-/* 422 */
+/* 421 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54094,7 +54061,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _flexboxgrid = __webpack_require__(417);
+	var _flexboxgrid = __webpack_require__(416);
 
 	var _flexboxgrid2 = _interopRequireDefault(_flexboxgrid);
 
@@ -54174,7 +54141,7 @@
 	};
 
 /***/ },
-/* 423 */
+/* 422 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54195,11 +54162,11 @@
 
 	var _reactRedux = __webpack_require__(158);
 
-	var _user = __webpack_require__(424);
+	var _user = __webpack_require__(423);
 
 	var UserActions = _interopRequireWildcard(_user);
 
-	var _raisedButton = __webpack_require__(425);
+	var _raisedButton = __webpack_require__(424);
 
 	var _raisedButton2 = _interopRequireDefault(_raisedButton);
 
@@ -54253,7 +54220,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 424 */
+/* 423 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54274,7 +54241,7 @@
 		}
 
 /***/ },
-/* 425 */
+/* 424 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54722,7 +54689,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 426 */
+/* 425 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54743,7 +54710,7 @@
 
 	var _reactRedux = __webpack_require__(158);
 
-	var _post = __webpack_require__(409);
+	var _post = __webpack_require__(408);
 
 	var PostActions = _interopRequireWildcard(_post);
 
@@ -54831,7 +54798,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 427 */
+/* 426 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54862,18 +54829,31 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 428 */
+/* 427 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 429 */,
+/* 428 */,
+/* 429 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Perf"] = __webpack_require__(430);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
 /* 430 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__(141);
+
+/***/ },
+/* 431 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var map = {
-		"./googlelogo.png": 431
+		"./googlelogo.png": 432
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -54886,11 +54866,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 430;
+	webpackContext.id = 431;
 
 
 /***/ },
-/* 431 */
+/* 432 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "googlelogo.png";

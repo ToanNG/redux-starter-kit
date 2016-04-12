@@ -11,6 +11,9 @@ import 'app.css'
 // import all files in images folder
 require.context('../images', false, /^.*$/)
 
+// expose perf tool
+import 'react-addons-perf'
+
 // the router reducer (name "routing") is not an immutable obj
 const initialState = immutifyState({
   obj: window.__INITIAL_STATE__,

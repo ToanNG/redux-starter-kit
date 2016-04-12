@@ -6,7 +6,6 @@ import getMuiTheme from 'material-ui/lib/styles/getMuiTheme'
 import themeDecorator from 'material-ui/lib/styles/theme-decorator'
 import Header from './Header'
 import Nav from './Nav'
-import Perf from 'react-addons-perf'
 
 import { addLocaleData } from 'react-intl'
 import vi from 'react-intl/locale-data/vi'
@@ -54,36 +53,9 @@ class App extends Component {
     }
   }
 
-  componentDidMount () {
-    window.addEventListener('keydown', this._handleKeyDown)
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('keydown', this._handleKeyDown)
-  }
-
   componentWillReceiveProps () {
     this.setState({ isInit: false })
   }
-
-  _handleKeyDown = (e) => {
-    if (!e.ctrlKey) return
-
-    switch (e.keyCode) {
-      case 90:
-        console.debug('Perf start')
-        Perf.start()
-        break
-      case 88:
-        console.debug('Perf stop')
-        Perf.stop()
-        break
-      case 67:
-        console.debug('Perf print wasted')
-        Perf.printWasted()
-        break
-    }
-  };
 
   _handleTouchTapMenuIcon = () => this.setState({ openNav: !this.state.openNav });
 
