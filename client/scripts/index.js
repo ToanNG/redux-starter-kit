@@ -33,8 +33,8 @@ ReactDOM.render(
 )
 
 // register service worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/javascripts/serviceWorker.js', {
-    scope: '/'
-  })
-}
+// if ('serviceWorker' in navigator) {
+//   navigator.serviceWorker.register('/javascripts/serviceWorker.js', {
+//     scope: '/'
+//   })
+// }
