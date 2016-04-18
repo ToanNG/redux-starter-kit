@@ -10,7 +10,7 @@ gulp.task('nodemon', function () {
   })
 
   return nodemon({
-    watch: ['routes', 'shared'],
+    ignore: ['client', 'dist', 'public'],
     script: 'bin/www'
   })
 })

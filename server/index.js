@@ -4,11 +4,11 @@ const router = express.Router()
 import React from 'react'
 import ReactDOM from 'react-dom/server'
 import { Provider } from 'react-redux'
-import { IntlProvider } from '../shared/lib/react-intl-redux'
 import { RouterContext, match } from 'react-router'
 import configureStore from '../shared/store/configureStore'
-import routes from '../shared/routes'
+import { IntlProvider } from '../shared/lib/react-intl-redux'
 import fetchComponentData from '../shared/lib/fetchComponentData'
+import routes from './routes'
 
 router.use((req, res, next) => {
   const store = configureStore()

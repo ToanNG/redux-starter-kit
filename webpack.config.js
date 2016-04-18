@@ -9,7 +9,8 @@ module.exports = {
   },
   output: {
     path: __dirname + '/dist',
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
+    publicPath: '/assets/'
   },
   plugins: [
     new ExtractTextPlugin('[name].css'),

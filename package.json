@@ -86,6 +86,7 @@
       "/dist/"
     ],
     "globals": [
+      "__SERVER__",
       "__CLIENT__",
       "__DEV__"
     ]
