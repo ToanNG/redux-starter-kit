@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "gulp dev",
-    "build": "NODE_ENV=production webpack --progress",
+    "build": "NODE_ENV=production webpack --config webpack.prod.config.js --progress",
     "start": "NODE_ENV=production node ./bin/www",
     "test": "mocha --compilers js:babel-register --require ./__test/testHelper.js '__test/**/*.spec.js'",
     "check-style-js": "standard --verbose | snazzy",
