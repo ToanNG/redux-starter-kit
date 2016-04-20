@@ -1,10 +1,10 @@
 import matchPattern from 'lib/matchPattern'
 
 const App = require('containers/App')
-const loadHome = cb => require.ensure([], require => cb(require('containers/Home')), 'Home')
-const loadLogin = cb => require.ensure([], require => cb(require('containers/Login')), 'Login')
-const loadPost = cb => require.ensure([], require => cb(require('containers/Post')), 'Post')
-const loadAbout = cb => require.ensure([], require => cb(require('containers/About')), 'About')
+const loadHome = require('bundle?lazy&name=Home!containers/Home')
+const loadPost = require('bundle?lazy&name=Post!containers/Post')
+const loadAbout = require('bundle?lazy&name=About!containers/About')
+const loadLogin = require('bundle?lazy&name=Login!containers/Login')
 const childRoutes = [
   { loadComponent: loadLogin, path: '/login' },
   { loadComponent: loadPost, path: '/posts/:postId' },

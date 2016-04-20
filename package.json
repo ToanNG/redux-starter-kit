@@ -52,6 +52,7 @@
   "devDependencies": {
     "babel-eslint": "^4.1.6",
     "babel-loader": "^6.2.2",
+    "bundle-loader": "^0.5.4",
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.3",
     "css-loader": "^0.23.1",
