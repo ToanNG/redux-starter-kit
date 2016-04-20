@@ -7,7 +7,8 @@
     "build": "NODE_ENV=production webpack --progress",
     "start": "NODE_ENV=production NODE_PATH=. node ./bin/www",
     "test": "mocha --compilers js:babel-register --require ./__test/testHelper.js '__test/**/*.spec.js'",
-    "check-style": "standard --verbose | snazzy"
+    "check-style-js": "standard --verbose | snazzy",
+    "check-style-css": "stylelint shared/**/*.css client/**/*.css --verbose; exit 0"
   },
   "dependencies": {
     "babel-plugin-add-module-exports": "^0.1.2",
@@ -70,6 +71,8 @@
     "snazzy": "^2.0.1",
     "standard": "^5.4.1",
     "style-loader": "^0.13.0",
+    "stylelint": "^6.0.1",
+    "stylelint-config-standard": "^6.0.0",
     "webpack": "^1.12.13"
   },
   "standard": {
@@ -82,8 +85,12 @@
       "__DEV__"
     ]
   },
+  "stylelint": {
+    "extends": "stylelint-config-standard"
+  },
   "pre-commit": [
     "test",
-    "check-style"
+    "check-style-js",
+    "check-style-css"
   ]
 }
