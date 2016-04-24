@@ -29,10 +29,12 @@
 
 
 /* eslint-disable quotes, comma-spacing */
-var PrecacheConfig = [["/assets/1.Home.bundle.js","ac1c46ef5e240d9f5dfc8a0ec32b1b7d"],["/assets/2.Post.bundle.js","55cee69013d38808467e2f53314ed300"],["/assets/3.About.bundle.js","2d70830446240ab2ec7991810d5e1940"],["/assets/4.Login.bundle.js","ff7f2806f1f4e1396c3abbbcc1fd7f0e"],["/assets/app.bundle.js","57dbe5a54839a7a3a700a09ff7dd2ea4"],["/assets/app.css","ad58f1b275a1e585f4d88e2126937dd3"],["/assets/googlelogo.png","8f9327db2597fa57d2f42b4a6c5a9855"],["/shell","4009efdd5e29bd31a26b9c26f49f5b7f"]];
+var PrecacheConfig = [["/assets/1.Home.bundle.js","547e9af82ce4fe9c9727a5fe72aa276a"],["/assets/2.Post.bundle.js","38eb68707491a84906fae4d7682e4acb"],["/assets/3.About.bundle.js","2d70830446240ab2ec7991810d5e1940"],["/assets/4.Login.bundle.js","ff7f2806f1f4e1396c3abbbcc1fd7f0e"],["/assets/app.bundle.js","c676499dfe465024c04bbe7ea11c6a13"],["/assets/app.css","583da96be4c33b21f55c17e5a1d6af74"],["/assets/googlelogo.png","8f9327db2597fa57d2f42b4a6c5a9855"],["/shell","4009efdd5e29bd31a26b9c26f49f5b7f"]];
 /* eslint-enable quotes, comma-spacing */
 var CacheNamePrefix = 'sw-precache-v1-react-server-' + (self.registration ? self.registration.scope : '') + '-';
 
+
+var IgnoreUrlParametersMatching = [/^utm_/];
 
 
 
@@ -189,5 +191,57 @@ self.addEventListener('message', function(event) {
     });
   }
 });
+
+
+self.addEventListener('fetch', function(event) {
+  if (event.request.method === 'GET') {
+    var urlWithoutIgnoredParameters = stripIgnoredUrlParameters(event.request.url,
+      IgnoreUrlParametersMatching);
+
+    var cacheName = AbsoluteUrlToCacheName[urlWithoutIgnoredParameters];
+    var directoryIndex = 'index.html';
+    if (!cacheName && directoryIndex) {
+      urlWithoutIgnoredParameters = addDirectoryIndex(urlWithoutIgnoredParameters, directoryIndex);
+      cacheName = AbsoluteUrlToCacheName[urlWithoutIgnoredParameters];
+    }
+
+    var navigateFallback = '/shell';
+    // Ideally, this would check for event.request.mode === 'navigate', but that is not widely
+    // supported yet:
+    // https://code.google.com/p/chromium/issues/detail?id=540967
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1209081
+    if (!cacheName && navigateFallback && event.request.headers.has('accept') &&
+        event.request.headers.get('accept').includes('text/html') &&
+        /* eslint-disable quotes, comma-spacing */
+        isPathWhitelisted(["^\\/stylesheets\\/","^\\/locale-data\\/","\\.json$"], event.request.url)) {
+        /* eslint-enable quotes, comma-spacing */
+      var navigateFallbackUrl = new URL(navigateFallback, self.location);
+      cacheName = AbsoluteUrlToCacheName[navigateFallbackUrl.toString()];
+    }
+
+    if (cacheName) {
+      event.respondWith(
+        // Rely on the fact that each cache we manage should only have one entry, and return that.
+        caches.open(cacheName).then(function(cache) {
+          return cache.keys().then(function(keys) {
+            return cache.match(keys[0]).then(function(response) {
+              if (response) {
+                return response;
+              }
+              // If for some reason the response was deleted from the cache,
+              // raise and exception and fall back to the fetch() triggered in the catch().
+              throw Error('The cache ' + cacheName + ' is empty.');
+            });
+          });
+        }).catch(function(e) {
+          console.warn('Couldn\'t serve response for "%s" from cache: %O', event.request.url, e);
+          return fetch(event.request);
+        })
+      );
+    }
+  }
+});
+
+
 
 

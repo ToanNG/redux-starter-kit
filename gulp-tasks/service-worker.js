@@ -21,8 +21,13 @@ gulp.task('service-worker', function (cb) {
     stripPrefix: 'dist/',
     replacePrefix: '/assets/',
     navigateFallback: '/shell',
+    navigateFallbackWhitelist: [
+      /^\/stylesheets\//,
+      /^\/locale-data\//,
+      /\.json$/
+    ],
     cacheId: packageName,
-    handleFetch: false
+    handleFetch: true
   })
   .then(cb)
   .catch(() => {

@@ -1,5 +1,5 @@
 :root {
-  --purple: #847ad1;
+  --primary: #847ad1;
   --large: 10px;
 }
 
@@ -8,7 +8,7 @@ body {
   font-family: 'Roboto', sans-serif;
 
   h1 {
-    color: var(--purple);
+    color: var(--primary);
   }
 }
 

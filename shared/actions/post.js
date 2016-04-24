@@ -16,7 +16,7 @@ export function getOnePost ({ postId }) {
   return {
     dataloader: () => dispatch => {
       dispatch({ type: 'GET_SETTINGS' })
-      return fetch('http://localhost:3000/settings.json')
+      return fetch('https://redux-starter-kit.herokuapp.com/settings.json')
         .then(response => response.json())
         .then(result => dispatch({ type: 'GET_SETTINGS_SUCCESS', result }))
     },

@@ -6,6 +6,7 @@ const loadPost = require('bundle?lazy&name=Post!containers/Post')
 const loadAbout = require('bundle?lazy&name=About!containers/About')
 const loadLogin = require('bundle?lazy&name=Login!containers/Login')
 const childRoutes = [
+  { component: null, path: '/shell' },
   { loadComponent: loadLogin, path: '/login' },
   { loadComponent: loadPost, path: '/posts/:postId' },
   { loadComponent: loadAbout, path: '/about' }
@@ -15,15 +16,15 @@ export default {
   path: '/',
   component: App,
   getChildRoutes (location, cb) {
-    childRoutes.forEach(route => {
-      const { loadComponent, path: pattern } = route
-
-      if (matchPattern(pattern, location.pathname)) {
-        loadComponent(Component => {
-          cb(null, { component: Component, path: pattern })
-        })
+    const route = childRoutes.find(({ path }) => matchPattern(path, location.pathname))
+    if (route) {
+      const { component, loadComponent, path } = route
+      if (typeof component !== 'undefined') {
+        cb(null, route)
+      } else {
+        loadComponent(Component => cb(null, { component: Component, path }))
       }
-    })
+    }
   },
   getIndexRoute (location, cb) {
     loadHome((Home) => {
