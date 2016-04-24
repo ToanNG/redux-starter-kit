@@ -7,8 +7,7 @@
   },
   "scripts": {
     "dev": "gulp dev",
-    "build": "NODE_ENV=production webpack --config webpack.prod.config.js --progress",
-    "start": "NODE_ENV=production node ./bin/www",
+    "start": "node ./bin/www",
     "test": "mocha --compilers js:babel-register --require ./__test/testHelper.js '__test/**/*.spec.js'",
     "check-style-js": "standard --verbose | snazzy",
     "check-style-css": "stylelint {shared,client}/**/*.css --verbose; exit 0"
@@ -61,6 +60,7 @@
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.3",
     "css-loader": "^0.23.1",
+    "del": "^2.2.0",
     "expose-loader": "^0.7.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
