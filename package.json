@@ -2,15 +2,19 @@
   "name": "react-server",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "~5.5"
+  },
   "scripts": {
     "dev": "gulp dev",
     "build": "NODE_ENV=production webpack --config webpack.prod.config.js --progress",
     "start": "NODE_ENV=production node ./bin/www",
     "test": "mocha --compilers js:babel-register --require ./__test/testHelper.js '__test/**/*.spec.js'",
     "check-style-js": "standard --verbose | snazzy",
-    "check-style-css": "stylelint shared/**/*.css client/**/*.css --verbose; exit 0"
+    "check-style-css": "stylelint {shared,client}/**/*.css --verbose; exit 0"
   },
   "dependencies": {
+    "babel-core": "^6.7.7",
     "babel-plugin-add-module-exports": "^0.1.2",
     "babel-plugin-transform-decorators": "^6.4.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -33,6 +37,7 @@
     "jade": "~1.11.0",
     "material-ui": "^0.14.4",
     "morgan": "~1.6.1",
+    "node-sass": "^3.5.3",
     "react": "^0.14.7",
     "react-addons-css-transition-group": "^0.14.7",
     "react-addons-pure-render-mixin": "^0.14.7",
@@ -79,12 +84,14 @@
     "style-loader": "^0.13.0",
     "stylelint": "^6.0.1",
     "stylelint-config-standard": "^6.0.0",
+    "sw-precache": "^3.1.1",
     "webpack": "^1.12.13"
   },
   "standard": {
     "parser": "babel-eslint",
     "ignore": [
-      "/dist/"
+      "/dist/",
+      "sw.js"
     ],
     "globals": [
       "__SERVER__",

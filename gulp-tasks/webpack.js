@@ -7,7 +7,8 @@ gulp.task('webpack:watch', function () {
 })
 
 gulp.task('webpack', function (cb) {
-  webpack(require('../webpack.config.js'), function (err, stats) {
+  var config = process.env.NODE_ENV === 'production' ? '../webpack.prod.config.js' : '../webpack.config.js'
+  webpack(require(config), function (err, stats) {
     if (err) throw new gutil.PluginError('webpack', err)
     gutil.log('[webpack]', stats.toString({
       colors: true,

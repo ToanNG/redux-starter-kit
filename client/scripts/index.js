@@ -14,6 +14,8 @@ require.context('../images', false, /^.*$/)
 // expose perf tool
 import 'react-addons-perf'
 
+import './registerServiceWorker'
+
 const { pathname, search, hash } = window.location
 const location = `${pathname}${search}${hash}`
 
@@ -34,10 +36,3 @@ match({ routes, location }, () => {
     document.getElementById('react-root')
   )
 })
-
-// register service worker
-// if ('serviceWorker' in navigator) {
-//   navigator.serviceWorker.register('/javascripts/serviceWorker.js', {
-//     scope: '/'
-//   })
-// }
