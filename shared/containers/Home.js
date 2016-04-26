@@ -51,7 +51,7 @@ class Home extends Component {
         </Grid>
         <h1>Home page</h1>
         <ImageComponent
-          src='/assets/googlelogo.png'
+          src='/googlelogo.png'
           style={{
             width: 272,
             height: 92

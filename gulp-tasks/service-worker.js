@@ -11,20 +11,19 @@ gulp.task('service-worker:watch', function (cb) {
 })
 
 gulp.task('service-worker', function (cb) {
-  swPrecache.write(path.join('public', 'sw.js'), {
+  swPrecache.write(path.join('dist', 'sw.js'), {
     staticFileGlobs: [
-      'dist/**/*.{js,html,css,png,jpg,jpeg,gif,svg}'
+      'dist/**/*.{js,html,css,png,jpg,jpeg,gif,svg,json}'
     ],
     dynamicUrlToDependencies: {
-      '/shell': ['views/index.jade', 'views/layout.jade']
+      '/shell': ['views/index.jade', 'views/layout.jade', 'dist/app.bundle.js', 'dist/app.css'],
+      '/about': ['views/index.jade', 'views/layout.jade', 'dist/3.About.bundle.js'],
+      '/login': ['views/index.jade', 'views/layout.jade', 'dist/4.Login.bundle.js']
     },
     stripPrefix: 'dist/',
-    replacePrefix: '/assets/',
     navigateFallback: '/shell',
     navigateFallbackWhitelist: [
-      /^\/stylesheets\//,
-      /^\/locale-data\//,
-      /\.json$/
+      /^\/posts\//
     ],
     cacheId: packageName,
     handleFetch: true

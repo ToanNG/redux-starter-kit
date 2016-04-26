@@ -7,7 +7,7 @@ export function getPosts () {
     data: state => state.setting.get('remoteUrl'),
     action: data => ({
       types: ['GET_POSTS', 'GET_POSTS_SUCCESS', 'GET_POSTS_FAILURE'],
-      promise: fetch(`${data}/posts?userId=1`)
+      promise: fetch(`${data}/post-data/all.json`)
     })
   }
 }
@@ -16,14 +16,14 @@ export function getOnePost ({ postId }) {
   return {
     dataloader: () => dispatch => {
       dispatch({ type: 'GET_SETTINGS' })
-      return fetch('https://redux-starter-kit.herokuapp.com/settings.json')
+      return fetch('http://localhost:3000/settings.json')
         .then(response => response.json())
         .then(result => dispatch({ type: 'GET_SETTINGS_SUCCESS', result }))
     },
     data: state => state.setting.get('remoteUrl'),
     action: data => dispatch => {
       dispatch({ type: 'GET_ONE_POST' })
-      return fetch(`${data}/posts/${postId}`)
+      return fetch(`${data}/post-data/${postId}.json`)
         .then(response => response.json())
         .then(result => dispatch({ type: 'GET_ONE_POST_SUCCESS', result }))
     }

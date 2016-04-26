@@ -25,9 +25,12 @@ class Post extends Component {
   ];
 
   componentDidMount () {
-    if (!this.context.isInit) {
-      const { postId } = this.props
-      this.props.actions.getOnePost({ postId })
+    const { isInit } = this.context
+    const { post, postId, actions } = this.props
+    const selectedPost = post.get('selectedPost')
+
+    if (!isInit || selectedPost.isEmpty()) {
+      actions.getOnePost({ postId })
     }
   }
 
@@ -35,7 +38,7 @@ class Post extends Component {
     const { post } = this.props
     const selectedPost = post.get('selectedPost')
 
-    if (!selectedPost) {
+    if (selectedPost.isEmpty()) {
       return (
         <div className='page'>Loading...</div>
       )

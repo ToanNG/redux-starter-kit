@@ -1,12 +1,13 @@
 import matchPattern from 'lib/matchPattern'
 
 const App = require('containers/App')
+const Shell = require('containers/Shell')
 const loadHome = require('bundle?lazy&name=Home!containers/Home')
 const loadPost = require('bundle?lazy&name=Post!containers/Post')
 const loadAbout = require('bundle?lazy&name=About!containers/About')
 const loadLogin = require('bundle?lazy&name=Login!containers/Login')
 const childRoutes = [
-  { component: null, path: '/shell' },
+  { component: Shell, path: '/shell' },
   { loadComponent: loadLogin, path: '/login' },
   { loadComponent: loadPost, path: '/posts/:postId' },
   { loadComponent: loadAbout, path: '/about' }

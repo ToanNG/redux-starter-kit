@@ -23,7 +23,7 @@ const setDefaultLocale = locale => target => {
   target.needs = [
     switchLocale.bind(null, {
       locale,
-      dataUrl: `https://redux-starter-kit.herokuapp.com/locale-data/${locale}.json`
+      dataUrl: `http://localhost:3000/locale-data/${locale}.json`
     })
   ]
 }

@@ -29,11 +29,14 @@ router.use((req, res, next) => {
             </Provider>
           )
           const initialState = store.getState()
+          const html = renderProps.location.pathname !== '/shell'
+            ? ReactDOM.renderToString(InitialView)
+            : null
 
           res.render('index', {
             title: 'Express',
-            html: ReactDOM.renderToString(InitialView),
-            state: JSON.stringify(initialState)
+            state: JSON.stringify(initialState),
+            html
           })
         })
         .catch((error) => {
