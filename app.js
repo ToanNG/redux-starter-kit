@@ -1,7 +1,3 @@
-global.__CLIENT__ = false
-global.__SERVER__ = true
-global.__DEV__ = false
-
 import express from 'express'
 import path from 'path'
 // import favicon from 'serve-favicon'
@@ -9,7 +5,7 @@ import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 
-import routes from './routes/index'
+import routes from './server/index'
 
 const app = express()
 
@@ -23,8 +19,7 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
-app.use('/assets', express.static(path.join(__dirname, 'dist')))
+app.use(express.static(path.join(__dirname, 'dist')))
 
 app.use('/', routes)
 

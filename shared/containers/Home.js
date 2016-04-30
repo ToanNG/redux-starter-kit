@@ -29,8 +29,12 @@ class Home extends Component {
   ];
 
   componentDidMount () {
-    if (!this.context.isInit) {
-      this.props.actions.getPosts()
+    const { isInit } = this.context
+    const { post, actions } = this.props
+    const posts = post.get('posts')
+
+    if (!isInit || !posts.size) {
+      actions.getPosts()
     }
   }
 
@@ -51,7 +55,7 @@ class Home extends Component {
         </Grid>
         <h1>Home page</h1>
         <ImageComponent
-          src='/assets/googlelogo.png'
+          src='/googlelogo.png'
           style={{
             width: 272,
             height: 92

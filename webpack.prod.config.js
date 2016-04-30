@@ -2,7 +2,7 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'cheap-module-source-map',
   context: __dirname + '/client/scripts',
   entry: {
     app: './index.js'
@@ -13,16 +13,19 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
     new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development') // <-- change to production to remove logs and warnings
+        NODE_ENV: JSON.stringify('production')
       }
     }),
     new webpack.DefinePlugin({
       __CLIENT__: true,
       __SERVER__: false,
-      __DEV__: true // <-- disable redux-logger
+      __DEV__: false
     })
   ],
   resolve: {

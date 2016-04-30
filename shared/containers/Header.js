@@ -41,7 +41,7 @@ class Header extends Component {
 
   _handleMenuChange = (e, locale) => this.props.switchLocale({
     locale,
-    dataUrl: `/locale-data/${locale}.json`
+    dataUrl: `http://localhost:3000/locale-data/${locale}.json`
   });
 
   _getCachedMenu = () => {

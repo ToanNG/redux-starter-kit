@@ -4,11 +4,11 @@ const router = express.Router()
 import React from 'react'
 import ReactDOM from 'react-dom/server'
 import { Provider } from 'react-redux'
-import { IntlProvider } from 'shared/lib/react-intl-redux'
 import { RouterContext, match } from 'react-router'
-import configureStore from 'shared/store/configureStore'
-import routes from 'shared/routes'
-import fetchComponentData from 'shared/lib/fetchComponentData'
+import configureStore from '../shared/store/configureStore'
+import { IntlProvider } from '../shared/lib/react-intl-redux'
+import fetchComponentData from '../shared/lib/fetchComponentData'
+import routes from './routes'
 
 router.use((req, res, next) => {
   const store = configureStore()
@@ -29,11 +29,14 @@ router.use((req, res, next) => {
             </Provider>
           )
           const initialState = store.getState()
+          const html = renderProps.location.pathname !== '/shell'
+            ? ReactDOM.renderToString(InitialView)
+            : 'Loading...'
 
           res.render('index', {
             title: 'Express',
-            html: ReactDOM.renderToString(InitialView),
-            state: JSON.stringify(initialState)
+            state: JSON.stringify(initialState),
+            html
           })
         })
         .catch((error) => {
