@@ -34,7 +34,7 @@ router.use((req, res, next) => {
             : 'Loading...'
 
           res.render('index', {
-            title: 'Express',
+            title: 'Redux Starter Kit',
             state: JSON.stringify(initialState),
             html
           })

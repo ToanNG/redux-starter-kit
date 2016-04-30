@@ -16,7 +16,7 @@ require('babel-register')
 var hook = require('css-modules-require-hook')
 hook({ generateScopedName: '[name]__[local]' })
 var app = require('../app')
-var debug = require('debug')('react-server:server')
+var debug = require('debug')('redux-starter-kit:server')
 var http = require('http')
 
 /**
