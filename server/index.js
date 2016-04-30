@@ -31,7 +31,7 @@ router.use((req, res, next) => {
           const initialState = store.getState()
           const html = renderProps.location.pathname !== '/shell'
             ? ReactDOM.renderToString(InitialView)
-            : null
+            : 'Loading...'
 
           res.render('index', {
             title: 'Express',

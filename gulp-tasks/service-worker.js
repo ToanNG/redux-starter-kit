@@ -23,6 +23,7 @@ gulp.task('service-worker', function (cb) {
     stripPrefix: 'dist/',
     navigateFallback: '/shell',
     navigateFallbackWhitelist: [
+      /^\/$/,
       /^\/posts\//
     ],
     cacheId: packageName,

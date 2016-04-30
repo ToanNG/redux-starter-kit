@@ -89,8 +89,7 @@
   "standard": {
     "parser": "babel-eslint",
     "ignore": [
-      "/dist/",
-      "sw.js"
+      "/dist/"
     ],
     "globals": [
       "__SERVER__",
